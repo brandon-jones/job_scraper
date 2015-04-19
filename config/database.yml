@@ -20,7 +20,7 @@ development:
   host: localhost
   port: 5432
   encoding: unicode
-  database: JobScraper
+  database: JobScraper_development
   pool: 5
   username: bjones
   password:
@@ -40,7 +40,7 @@ production:
   host: <%= ENV['JJ_DB_HOST'] %>
   port: 5432
   encoding: unicode
-  database: <%= ENV['JJ_DB_DATABASE'] %>
+  database: JobScraper
   pool: 5
   username: <%= ENV['JJ_DB_USER'] %>
   password: <%= ENV['JJ_DB_PASSWORD'] %>
