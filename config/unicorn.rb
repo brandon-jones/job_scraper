@@ -29,8 +29,8 @@ pid app_path + '/tmp/unicorn.pid'
 
 # You should define your stderr and stdout here. If you don't, stderr defaults
 # to /dev/null and you'll lose any error logging when in daemon mode.
-stderr_path app_path + '/log/unicorn.log'
-stdout_path app_path + '/log/unicorn.log'
+stderr_path app_path + '/log/unicorn.error.log'
+stdout_path app_path + '/log/unicorn.access.log'
 
 # Load the app up before forking.
 preload_app true
