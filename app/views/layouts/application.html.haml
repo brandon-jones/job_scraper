@@ -11,4 +11,12 @@
     %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
     %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"}
   %body
-    = yield
+    .container-fluid
+      .row
+        .col-md-12
+          = render partial: 'layouts/top_nav'
+      .row
+        .col-md-10.col-sm-offset-1
+          %p.notice= notice
+          %p.alert= alert
+          = yield

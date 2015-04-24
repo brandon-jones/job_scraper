@@ -1,0 +1,32 @@
+%nav.navbar.navbar-default.navbar-inverse.navbar-fixed-top
+  .container-fluid
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "/"}
+        = image_tag("logo.png", :alt => "Brand", id: 'brand-icon')
+    / Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      - puts params
+      - selected = params["controller"] + "_" + params["action"]
+      %ul.nav.navbar-nav
+        %li{:role => "presentation", class: "#{'active' if selected == 'static_pages_contact_me' }"}
+          %a{:href => "/contact_me"}
+            Hey
+      %ul.nav.navbar-nav.navbar-right
+        - if current_user
+          %li.dropdown
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              = current_user.email
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              %li
+                = link_to "Logout", destroy_user_session_path, :method => :delete
+        - else
+          %li
+            %a{:href => "#{new_user_session_path}"}
+              Sign In
