@@ -1,0 +1,10 @@
+= form_for new_job_search do |f|
+  .field.form-group
+    = f.label :search_terms
+    = f.text_field :search_terms, class: 'form-control'
+  .field.form-group
+    = f.label :category
+    = f.select :category, job_search.category_options, {}, class: 'form-control'
+    = f.hidden_field :job_search_id, value: "#{job_search.id}"
+  .actions
+    = f.submit 'Save'

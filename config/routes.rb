@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get 'job_searches', to: 'job_searches#index'
+  post 'we_work_remotelies', to: 'saved_searches#create'
 
   root to: "static_pages#home"
   # The priority is based upon order of creation: first created -> highest priority.
