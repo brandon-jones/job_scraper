@@ -6,6 +6,6 @@ FactoryGirl.define do
     options "{ 'categories' => { '2' => 'programming' }, 'search_terms' => ['ruby on rails', 'jr dev'] }"
     homepage 'https://weworkremotely.com'
     search_url 'https://weworkremotely.com/jobs/search?term={{search_terms}}'
-    search_type 'weworkremotely'
+    type 'weworkremotely'
   end
 end
