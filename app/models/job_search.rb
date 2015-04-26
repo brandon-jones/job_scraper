@@ -1,5 +1,6 @@
 class JobSearch < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  
+
+  validates_uniqueness_of :name
+  validates_presence_of :name
+
 end

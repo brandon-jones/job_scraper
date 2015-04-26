@@ -1,0 +1,3 @@
+class WeWorkRemotely < JobSearch
+
+end

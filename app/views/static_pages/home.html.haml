@@ -1,1 +1,7 @@
-hell pig fucker
+%a{:href => "/contact_me"}
+  New Saved Search
+%br
+- if @saved_searches.count > 0
+  = @saved_searches
+- else
+  You have no saved searches
