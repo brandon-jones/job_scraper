@@ -1,28 +1,14 @@
-== README
+== User
+Devise authentication with only email address and password
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+== Job Search
+Used to store website info to scrap sites. Job search will be base type. For example we work remotly will end up needing unique methods.
 
-Things you may want to cover:
+== Saved Searches
+As of now will be a redis list or set used to store individual saved searchs
 
-* Ruby version
+== Search Results
+As of now will be used to store each saved searches for a week. after the week old non saved results will drop off
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+== Applied Jobs
+As of now will be used to store jobs from search results as long as user wants
