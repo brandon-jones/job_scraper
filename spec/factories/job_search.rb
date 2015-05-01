@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :job_search do
+    id 1
     name 'We Work Remotly'
     description 'remote only jobs'
     image 'http://i.imgur.com/2sbJ7Oo.jpg'

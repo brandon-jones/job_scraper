@@ -1,7 +1,24 @@
-%a{:href => "#{job_searches_path}"}
-  New Saved Search
+%p
+  %a{:href => "#{job_searches_path}"}
+    New Saved Search
 %br
 - if @saved_searches.count > 0
-  = @saved_searches
+  - current_user.saved_searches.each do |saved_search|
+    %table.table
+      %tr
+        %th Search Site
+        - saved_search.job_search.headers.each do |header|
+          %th= header
+      %tr
+        %td= saved_search.job_search.name
+        - saved_search.user_data.keys.each do |key|
+          %td= saved_search.user_data[key]
+    %p
+      = saved_search.to_json
+    %p
+      %strong
+        Results from saved Search
+    %p
+      = saved_search.results
 - else
   You have no saved searches
