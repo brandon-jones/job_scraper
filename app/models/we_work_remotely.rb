@@ -10,6 +10,10 @@ class WeWorkRemotely < JobSearch
   #   return ''
   # end
 
+  def self.convert_date(date)
+    return Date.new(Time.now.utc.year, Date::ABBR_MONTHNAMES.index(date.split(' ')[0]), date.split(' ')[1].to_i)
+  end
+
   def get_search_term(data)
     return data["search_terms"]
   end
@@ -23,13 +27,6 @@ class WeWorkRemotely < JobSearch
     return ['Search Term', 'Category']
   end
 
-  # def header_data
-  #   return_hash = {}
-  #   binding.pry
-  #   return_hash['search_term'] = get_category()
-  #   # return_hash['category'] = 
-  # end
-
   def build_search_results(requested_results, result)
     noko_body = Nokogiri::HTML(result)
     search_results = []
@@ -38,9 +35,10 @@ class WeWorkRemotely < JobSearch
         results_hash = {}
         results_hash['company'] = section_li.css('.company').text if section_li.css('.company').text.present?
         results_hash['title'] = section_li.css('.title').text if section_li.css('.title').text.present?
-        results_hash['date'] = section_li.css('.date').text if section_li.css('.date').text.present?
+        results_hash['date_str'] = section_li.css('.date').text if section_li.css('.date').text.present?
         results_hash['link'] =  "https://weworkremotely.com#{section_li.css('a')[0]['href']}" if section_li.css('a')[0]['href'].present?
-        search_results << results_hash if results_hash.keys.count > 1
+        results_hash['type'] = self.type
+        search_results << results_hash if results_hash.keys.count > 2
       end
     end
     return search_results

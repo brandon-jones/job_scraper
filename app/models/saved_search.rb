@@ -1,4 +1,4 @@
-class SavedSearches < Hashie::Mash
+class SavedSearch < Hashie::Mash
 
   KEY = 'saved_searches'
 
@@ -7,7 +7,7 @@ class SavedSearches < Hashie::Mash
   end
 
   def add_result(result)
-    SearchResults.add(self.saved_search_id, result)
+    SearchResult.add(self.saved_search_id, result)
   end
 
   def job_search
@@ -16,7 +16,7 @@ class SavedSearches < Hashie::Mash
   end
 
   def results
-    return SearchResults.get_current(self.saved_search_id)
+    return SearchResult.get_current(self.saved_search_id)
   end
 
   def user_data
@@ -28,14 +28,6 @@ class SavedSearches < Hashie::Mash
     end
     return return_hash
   end
-
-  # def self.find_by_id(saved_search_id)
-  #   all = all(current_user)
-  #   all.each do |member|
-  #     binding.pry
-  #   end
-  #   binding.pry
-  # end
 
   def self.clean_params(data)
     if data["we_work_remotely"]
@@ -70,7 +62,7 @@ class SavedSearches < Hashie::Mash
     builder = []
     members = $redis.smembers("#{KEY}:#{current_user.id}")
     members.each do |member|
-      ss = SavedSearches.new(JSON.parse(member))
+      ss = SavedSearch.new(JSON.parse(member))
       builder << ss
     end
     return builder
@@ -80,7 +72,7 @@ class SavedSearches < Hashie::Mash
     builder = []
     members = $redis.smembers("#{KEY}:#{current_user.id}")
     members.each do |member|
-      ss = SavedSearches.new(JSON.parse(member))
+      ss = SavedSearch.new(JSON.parse(member))
       builder << ss
     end
     return builder

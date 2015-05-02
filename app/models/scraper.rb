@@ -3,7 +3,7 @@ class Scraper
     users = User.all
     saved_searches = []
     users.each do |user|
-      ss = SavedSearches.new
+      ss = SavedSearch.new
       ss_all = user.saved_searches
       saved_searches += ss_all if ss_all
     end

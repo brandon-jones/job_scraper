@@ -1,0 +1,2 @@
+- @saved_search_result.each do |ssr|
+  = render partial: "#{ssr.type.underscore}.html", locals: { saved_search_result: ssr }
