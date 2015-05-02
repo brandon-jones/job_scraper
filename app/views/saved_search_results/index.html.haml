@@ -1,2 +1,24 @@
-- @saved_search_result.each do |ssr|
-  = render partial: "#{ssr.type.underscore}.html", locals: { saved_search_result: ssr }
+%h1.text-center
+  Jobs applied For
+%table.table
+  %tbody
+    - @saved_search_result.each do |ssr|
+      = render partial: "#{ssr.type.underscore}_row.html", locals: { saved_search_result: ssr }
+
+#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#myModalLabel.modal-title Add/Edit Job Link
+      .modal-body
+        = form_tag('/', class: "form-horizontal" ) do
+          .form-group
+            = label_tag "link-to-site", 'Url', class: 'col-sm-1 control-label' 
+            .col-sm-11
+              = text_field_tag "link-to-site", '',class: 'form-control'
+        #modal-errors
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Cancel
+        %button.btn.btn-primary#modal-save{:type => "button"} Save changes

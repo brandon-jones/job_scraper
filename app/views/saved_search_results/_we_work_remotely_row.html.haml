@@ -1,0 +1,21 @@
+%tr
+  %td
+    = saved_search_result.company
+  %td
+    = link_to saved_search_result.title, saved_search_result.link, { target: '_blank' }
+  %td
+    = local_time(saved_search_result.date_applied)
+  %td
+    .dropdown
+      %button#saved-search-result-option-dropdown.btn.btn-default.btn-sm.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+        Options
+        %span.caret
+      %ul.dropdown-menu{"aria-labelledby" => "saved-search-result-option-dropdown", :role => "menu"}
+        %li{:role => "presentation"}
+          %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Update
+        %li{:role => "presentation"}
+          %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Denied
+        %li{:role => "presentation"}
+          %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Delete
+        %li{:role => "presentation"}
+          %a{:href => "#", :role => "menuitem", :tabindex => "-1", data: {toggle: 'modal', target: '#myModal' }} Add link to Site

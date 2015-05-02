@@ -1,5 +1,9 @@
 class SavedSearchResultsController < ApplicationController
 
+  def update
+    
+  end
+
   def index
     return [] unless current_user
     @saved_search_result = current_user.saved_search_results
