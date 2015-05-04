@@ -7,12 +7,16 @@ class SavedSearch < Hashie::Mash
   end
 
   def self.score
-    return SecureRandom.hex(12)
+    return SecureRandom.random_number(1000000)
   end
 
   def self.key
     return @key ||= "saved_searches"
   end
+
+  # def self.redis_key
+  #   return "#{key}:"
+  # end
 
   def key
     return @key ||= "saved_searches"
@@ -51,47 +55,27 @@ class SavedSearch < Hashie::Mash
     end
   end
 
-  # def self.add(current_user, data)
-  #   if data.class.to_s == 'String'
-  #     data = JSON.parse(data)
-  #   end
-  #   data['user_id'] = current_user.id.to_s
-  #   unless all(current_user).collect { |c| c.except('saved_search_id').to_json }.include?(data.to_json)
-  #     data['saved_search_id'] = SecureRandom.hex(12)
-  #     $redis.sadd("#{KEY}:#{current_user.id}", data.to_json)
-  #   else
-  #     puts 'ALREADY THERE' * 80
-  #   end
-  #   return self
-  # end
+  def self.add(current_user_id, data)
+    data = JSON.parse(data) if data.class.to_s == 'String'
 
-  # def remove(current_user, member)
-  #   $redis.sremove("#{key}:#{current_user.id}", member)
-  #   return self
-  # end
-
-  def all(current_user)
-    builder = []
-    # if $redis.keys.include?("#{key}:#{current_user.id}")
-      members = $redis.zrange("#{key}:#{current_user.id}", 0, -1)
-      members.each do |member|
-        ss = SavedSearch.new(JSON.parse(member))
-        builder << ss
-      end
-    # end
-    return builder
+    data['user_id'] = current_user_id.to_s
+    unless contains_by_member?(current_user_id, data)
+      data['saved_search_id'] = SecureRandom.hex(12)
+      data['score'] = self.score
+      $redis.zadd("#{key}:#{current_user_id}", self.score, data.to_json)
+    else
+      puts 'ALREADY THERE' * 80
+    end
+    return self
   end
 
-  def self.all(current_user)
+  def all(unique_id)
     builder = []
-    # if $redis.keys.include?("#{key}:#{current_user.id}")
-      members = $redis.zrange("#{key}:#{current_user.id}", 0, -1)
-      members.each do |member|
-        binding.pry
-        ss = SavedSearch.new(JSON.parse(member))
-        builder << ss
-      end
-    # end
+    members = $redis.zrange("#{key}:#{unique_id}", 0, -1)
+    members.each do |member|
+      ss = SavedSearch.new(JSON.parse(member))
+      builder << ss
+    end
     return builder
   end
 end

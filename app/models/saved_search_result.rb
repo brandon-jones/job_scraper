@@ -7,30 +7,15 @@ class SavedSearchResult < Hashie::Mash
   end
 
    def self.unique_keys
-    return @unique_keys ||= [ "" ]
+    return @unique_keys ||= [ "user_link" ]
   end
 
   def self.score
-    return SecureRandom.hex(12)
+    return SecureRandom.random_number(1000000)
   end
 
-  # def self.remove(user, member)
-  #   binding.pry
-  # end
-
-  # def self.add(user, data)
-  #   unless $redis.sismember("#{KEY}:#{user.id}", data.except("score", 'applied').to_json)
-  #     data["date_applied"] = DateTime.now.utc
-  #     return $redis.sadd("#{KEY}:#{user.id}", data.except("score", "applied").to_json)
-  #   end
-  #   return false
-  # end
-
-  def remove_applied_key
-    
-  end
-
-  def self.all(user)
-    return $redis.smembers("#{KEY}:#{user.id}").collect { |member| SavedSearchResult.new(JSON.parse(member)) }
+  def self.add_unique_keys(data)
+    data["date_applied"] = DateTime.now.utc
+    return data
   end
 end

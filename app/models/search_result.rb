@@ -29,6 +29,10 @@ class SearchResult < Hashie::Mash
     return builder
   end
 
+  def self.all(saved_search_id)
+    return get_current(saved_search_id)
+  end
+
   def self.remove_outdated(saved_search_id)
     $redis.zremrangebyscore("#{key}:#{saved_search_id}", -1, (Time.now.utc - TIME_TO_LIVE.to_f).to_f)
   end
