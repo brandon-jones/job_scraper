@@ -1,18 +1,30 @@
 class SavedSearchResult < Hashie::Mash
+  
+  extend RedisInstanceModel
 
-  KEY = 'saved_search_result'
-
-  def self.remove(user, member)
-    binding.pry
+  def self.key
+    return @key ||= 'saved_search_result'
   end
 
-  def self.add(user, data)
-    unless $redis.sismember("#{KEY}:#{user.id}", data.except("score", 'applied').to_json)
-      data["date_applied"] = DateTime.now.utc
-      return $redis.sadd("#{KEY}:#{user.id}", data.except("score", "applied").to_json)
-    end
-    return false
+   def self.unique_keys
+    return @unique_keys ||= [ "" ]
   end
+
+  def self.score
+    return SecureRandom.hex(12)
+  end
+
+  # def self.remove(user, member)
+  #   binding.pry
+  # end
+
+  # def self.add(user, data)
+  #   unless $redis.sismember("#{KEY}:#{user.id}", data.except("score", 'applied').to_json)
+  #     data["date_applied"] = DateTime.now.utc
+  #     return $redis.sadd("#{KEY}:#{user.id}", data.except("score", "applied").to_json)
+  #   end
+  #   return false
+  # end
 
   def remove_applied_key
     

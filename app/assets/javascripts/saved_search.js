@@ -15,17 +15,17 @@ saveLink = function(e) {
   } else {
     $('#modal-errors')[0].textContent = '';
     return $.ajax({
-    type: 'POST',
-    url: '/apply_for_job',
-    dataType: 'json',
-    data: {
-      saved_search: saved_search,
-    },
-    beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-    success: function(data, textStatus) {
-      button.style.visibility = "hidden";
-    }
-  });
+      type: 'POST',
+      url: '/update_link_saved_job',
+      dataType: 'json',
+      data: {
+        saved_search: saved_search,
+      },
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      success: function(data, textStatus) {
+        button.style.visibility = "hidden";
+      }
+    });
   }
 };
 
