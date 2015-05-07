@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   post 'apply_for_job', to: 'saved_search_results#create'
 
   root to: "static_pages#home"
+
+  delete 'saved_search_results', to: 'saved_search_results#destroy', as: 'destory_saved_search_results'
+  delete 'saved_searchs', to: 'saved_searchs#destroy', as: 'destory_saved_searchs'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

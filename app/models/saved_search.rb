@@ -1,6 +1,4 @@
-class SavedSearch < Hashie::Mash
-
-  extend RedisInstanceModel
+class SavedSearch < RedisModel
 
   def self.unique_keys
     return @unique_keys ||= [ "saved_search_id" ]

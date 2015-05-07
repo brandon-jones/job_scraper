@@ -1,14 +1,15 @@
 $(document).ready(function() {
   $('#exampleModal').on('show.bs.modal', function (event) {
-    console.log('testing');
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var id = button.data('id') // Extract info from data-* attributes
-    var company = button.data('title') // Extract info from data-* attributes
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id = button.data('id'); // Extract info from data-* attributes
+    var company = button.data('title'); // Extract info from data-* attributes
+    var user_link = button[0].dataset.userLink;
     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this)
-    modal.find('.modal-title').text('Add/Edit link for ' + company)
-    modal.find('#modal-save')[0].dataset.id = id
+    var modal = $(this);
+    modal.find('.modal-title').text('Add/Edit link for ' + company);
+    modal.find('#modal-save')[0].dataset.id = id;
+    modal.find('#link-to-site').val(user_link);
   })
   return $('#modal-save').on("click", saveLink);
 });
@@ -18,6 +19,8 @@ saveLink = function(e) {
   e.preventDefault();
   console.log('testing');
   link = $('#link-to-site').val();
+  editLink = "edit-link-"+this.dataset.id;
+
   if ( is_valid_url(link) == false && link.length > 0 ) {
     $('#modal-errors')[0].textContent = 'Please fill in a valid url';
   } else {
@@ -50,6 +53,8 @@ saveLink = function(e) {
         } else {
           td.text(linkText.textContent);
         }
+
+        $('#'+editLink)[0].dataset.userLink = data.link;
         $('#link-to-site').val('');
         $('#exampleModal').modal('hide')
       }

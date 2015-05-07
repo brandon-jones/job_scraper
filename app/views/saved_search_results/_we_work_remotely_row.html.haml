@@ -9,16 +9,4 @@
   %td
     = local_time(saved_search_result.date_applied)
   %td
-    .dropdown
-      %button#saved-search-result-option-dropdown.btn.btn-default.btn-sm.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
-        Options
-        %span.caret
-      %ul.dropdown-menu{"aria-labelledby" => "saved-search-result-option-dropdown", :role => "menu"}
-        %li{:role => "presentation"}
-          %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Update
-        %li{:role => "presentation"}
-          %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Denied
-        %li{:role => "presentation"}
-          %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Delete
-        %li{:role => "presentation"}
-          %a{:href => "#", :role => "menuitem", :tabindex => "-1", data: {toggle: 'modal', target: "#exampleModal", id: "#{saved_search_result.score}", title: "#{saved_search_result.company}" }} Add link to Site
+    = render partial: 'saved_search_result_options', locals: { saved_search_result: saved_search_result }

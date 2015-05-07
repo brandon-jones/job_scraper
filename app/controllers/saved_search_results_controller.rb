@@ -5,7 +5,7 @@ class SavedSearchResultsController < ApplicationController
       if ssr = SavedSearchResult.contains_by_score?(current_user.id, params["id"].to_f)
         SavedSearchResult.remove_by_score(current_user.id, params["id"])
         ssr.user_link = params["link"]
-        if SavedSearchResult.add(current_user.id, ssr, ssr.score)
+        if SavedSearchResult.add(current_user.id, ssr, ssr.to_hash)
           format.json { render :json=>{ id: params["id"], link: params["link"], company: ssr.company } }
         else
           format.json { render :json => 'errors', :status => :unprocessable_entity }
@@ -18,6 +18,18 @@ class SavedSearchResultsController < ApplicationController
   def index
     return [] unless current_user
     @saved_search_result = current_user.saved_search_results
+  end
+
+  def destroy
+    if model = params["controller"].singularize.camelize.constantize.contains_by_score?(current_user.id, params["score"])
+      binding.pry
+      if SavedSearchResult.remove_by_score(current_user.id, model.score)
+        SavedSearch.add_deleted_key(current_user.id, model.score)
+      else
+
+      end 
+    end
+    redirect_to '/user/applied_jobs'
   end
 
   def create

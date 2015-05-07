@@ -1,6 +1,4 @@
-class SearchResult < Hashie::Mash
-
-  extend RedisInstanceModel
+class SearchResult < RedisModel
 
   TIME_TO_LIVE = 7.days
 
@@ -40,7 +38,11 @@ class SearchResult < Hashie::Mash
   def add_applied_key(user, saved_search)
     SearchResult.remove_by_score(saved_search["saved_search_id"], saved_search["score"])
     self["applied"] = true
-    SearchResult.add(saved_search_id,self.except("saved_search_id"),saved_search["score"])
+    SearchResult.add(saved_search_id,self.except("saved_search_id"),saved_search.to_hash)
+  end
+
+  def self.add_deleted_key(user, saved_search_score)
+    binding.pry
   end
 
   def self.applied_to_job(current_user, saved_search)
