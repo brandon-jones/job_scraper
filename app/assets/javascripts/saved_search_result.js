@@ -17,7 +17,6 @@ $(document).ready(function() {
 saveLink = function(e) {
   e.stopPropagation();
   e.preventDefault();
-  console.log('testing');
   link = $('#link-to-site').val();
   editLink = "edit-link-"+this.dataset.id;
 
