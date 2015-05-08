@@ -12,7 +12,7 @@ class Scraper
 
     saved_searches.each do |saved_search|
 
-      job_search = JobSearch.find_by_id(saved_search.job_search_id)
+      job_search = JobSearch.find_by_id(saved_search.job_search)
       search_url = job_search.search_url
 
       saved_search.keys.each do |key|

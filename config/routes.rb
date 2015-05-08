@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'job_searches', to: 'job_searches#index'
   post 'update_link_saved_job', to: 'saved_search_results#update_link'
+  post 'saved_search_result/updated', to: 'saved_search_results#updated'
+  post 'saved_search_result/denied', to: 'saved_search_results#denied'
   post 'we_work_remotelies', to: 'saved_searches#create'
 
   post 'apply_for_job', to: 'saved_search_results#create'

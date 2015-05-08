@@ -30,7 +30,6 @@ class RedisModel < Hashie::Mash
 
     if contains == false || contains == nil
       # score = passed_values['score'] || self.class.score
-      
       data = get_unique_keys.merge(data)
       if $redis.zadd("#{redis_key}", data['score'].to_f, data.to_json)
         return self.class.new(unique_id, data)
@@ -44,7 +43,13 @@ class RedisModel < Hashie::Mash
   def get_unique_keys
     return_hash = {}
     return_hash["score"] = self.class.score
+    return_hash['parent_unique_id'] = unique_id.to_s
     return return_hash
+  end
+
+  def to_time(obj)
+    return nil unless self[obj]
+    return DateTime.strptime(self[obj], "%s")
   end
 
   def self.find_by_score(unique_id, passed_score)
@@ -72,14 +77,25 @@ class RedisModel < Hashie::Mash
     return false
   end
 
-  def add_key_value(key, value, over_ride = false)
-    if over_ride
-      self[key] = value
-    else
+  # override, ignore, build
+  def add_key_value(key, value, status = 'ignore')
+    case status
+    when 'ignore'
       self[key] = value unless self[key]
+    when 'orverride'
+      self[key] = value
+    when 'build'
+      binding.pry
+      self[key] = [] unless self[key]
+      self[key] << value
     end
-    destroy
-    return add(self, self)
+    
+
+    if destroy
+      return add(self, self)
+    else
+      return false
+    end
   end
 
   def remove_key_value(key, value)
@@ -100,8 +116,7 @@ class RedisModel < Hashie::Mash
   end
 
   def self.remove_by_score(score)
-    binding.pry
-    return $redis.zremrangebyscore("#{key}:#{@unique_id}",score.to_f,score.to_f)
+    return $redis.zremrangebyscore("#{redis_key}",score.to_f,score.to_f)
   end
 
   def self.all(unique_id)

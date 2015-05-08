@@ -20,9 +20,13 @@
       Date Posted
     %th
       Apply
-  - 
   - saved_search.results.sort_by { |k| k.date }.reverse.each do |result|
-    %tr.clickable-row{ data: { href: "#{result.link}" } }
+  - options = {}
+    - if result.applied.present?
+      - options = { class: 'applied', title: "#{local_time(result.to_time('applied'))}" }
+    - if result.deleted.present?
+      - options = { class: 'deleted', title: "#{local_time(result.to_time('deleted'))}" }
+    %tr{ options, data: { href: "#{result.link}" } }
       %td= result.company
       %td
         - if result.link && result.link.length > 0

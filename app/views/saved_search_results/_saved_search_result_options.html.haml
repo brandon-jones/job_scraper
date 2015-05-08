@@ -4,9 +4,9 @@
     %span.caret
   %ul.dropdown-menu{"aria-labelledby" => "saved-search-result-option-dropdown", :role => "menu"}
     %li{:role => "presentation"}
-      %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Update
+      %a.ssr-updated{:href => "#", :role => "menuitem", :tabindex => "-1", data: saved_search_result} Update
     %li{:role => "presentation"}
-      %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Denied
+      %a.ssr-denied{:href => "#", :role => "menuitem", :tabindex => "-1", data: saved_search_result} Denied
     %li{:role => "presentation"}
       = link_to 'Delete', "/#{saved_search_result.class.to_s.underscore.pluralize}?score=#{saved_search_result.html_score}", method: :delete, data: { confirm: 'Are you sure?' }
     %li{:role => "presentation"}

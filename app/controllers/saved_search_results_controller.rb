@@ -1,6 +1,35 @@
 class SavedSearchResultsController < ApplicationController
 
+  def updated
+    redirect_to root_url and return unless current_user
+    respond_to do |format|
+      if ssr = SavedSearchResult.find_by_score(current_user.id, params["saved_search_result"]["score"].to_f)
+        if ssr.add_key_value('updated', DateTime.now.utc.to_f.to_s, 'build')
+          format.json { render :json=>{ id: params["saved_search_result"]["id"], link: params["saved_search_result"]["link"], company: ssr.company } }
+        else
+          format.json { render :json => 'errors', :status => :unprocessable_entity }
+        end
+      end
+      format.json { render :json => 'errors', :status => :unprocessable_entity }
+    end
+  end
+
+  def denied
+    redirect_to root_url and return unless current_user
+    respond_to do |format|
+      if ssr = SavedSearchResult.find_by_score(current_user.id, params["saved_search_result"]["score"])
+        if ssr.add_key_value('denied', DateTime.now.utc.to_f.to_s, 'override')
+          format.json { render :json=>{ id: params["saved_search_result"]["id"], link: params["saved_search_result"]["link"], company: ssr.company } }
+        else
+          format.json { render :json => 'errors', :status => :unprocessable_entity }
+        end
+      end
+      format.json { render :json => 'errors', :status => :unprocessable_entity }
+    end
+  end
+
   def update_link
+    redirect_to root_url and return unless current_user
     respond_to do |format|
       if ssr = SavedSearchResult.find_by_score(current_user.id, params["id"].to_f)
         if ssr.add_user_link(params["link"])
@@ -19,14 +48,22 @@ class SavedSearchResultsController < ApplicationController
   end
 
   def destroy
-    if model = params["controller"].singularize.camelize.constantize.find_by_score(current_user.id, params["score"])
-      if model.destory(current_user)
-        SavedSearch.add_key_value(current_user.id, 'delete', 'true', model)
-      else
-        binding.pry
-      end 
+    redirect_to root_url and return unless current_user
+    respond_to do |format|
+      if model = SavedSearchResult.find_by_score(current_user.id, params["score"])
+        if model.destroy
+          sr = SearchResult.find_by_score(model.parent_unique_id, params["score"])
+          if sr.add_key_value('deleted', DateTime.now.utc.to_f.to_s, 'override')
+            format.json { render :json=>true }
+            format.html { redirect_to '/user/applied_jobs' }
+          else
+            format.json { render :json => 'errors', :status => :unprocessable_entity }
+          end
+        end
+      end
+      format.html { redirect_to '/user/applied_jobs' }
+      format.json { render :json => 'errors', :status => :unprocessable_entity }
     end
-    redirect_to '/user/applied_jobs'
   end
 
   def create

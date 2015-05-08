@@ -7,6 +7,6 @@
   %td
     = link_to saved_search_result.title, saved_search_result.link, { target: '_blank' }
   %td
-    = local_time(saved_search_result.date_applied)
+    = local_time(saved_search_result.to_time('date_applied'))
   %td
     = render partial: 'saved_search_result_options', locals: { saved_search_result: saved_search_result }

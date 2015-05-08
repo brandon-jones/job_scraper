@@ -12,7 +12,7 @@ class SearchResult < RedisModel
   end
 
   def self.unique_keys
-    return @unique_keys ||= [ "score", "applied", "saved_search_id" ]
+    return @unique_keys ||= [ "score", "applied", "saved_search_id", "parent_unique_id", "deleted" ]
   end
 
   def self.score
@@ -53,7 +53,7 @@ class SearchResult < RedisModel
 
   def self.applied_to_job(current_user_id, saved_search)
     if job = self.find_by_member(saved_search['saved_search_id'], saved_search)
-      if new_job = job.add_key_value('applied', DateTime.now.utc.to_s, true)
+      if new_job = job.add_key_value('applied', DateTime.now.utc.to_f.to_s, 'override')
         return new_job
       else
         return false

@@ -17,7 +17,7 @@ class SavedSearchResult < RedisModel
   end
 
    def self.unique_keys
-    return @unique_keys ||= [ "user_link", "date_applied" ]
+    return @unique_keys ||= [ "user_link", "date_applied", "parent_unique_id" ]
   end
 
   def self.score
@@ -26,13 +26,13 @@ class SavedSearchResult < RedisModel
 
   def get_unique_keys
     return_hash = {}
-    return_hash["date_applied"] = DateTime.now.utc.to_s
+    return_hash["date_applied"] = DateTime.now.utc.to_f.to_s
     return return_hash.merge(super)
   end
 
   def add_user_link(link)
-    add_key_value('user_link', link, true)
-    if add_key_value('user_link', link, true)
+    add_key_value('user_link', link, 'override')
+    if add_key_value('user_link', link, 'override')
       return self
     end
     return false

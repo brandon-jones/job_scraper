@@ -1,18 +1,63 @@
 $(document).ready(function() {
-  $('#exampleModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var id = button.data('id'); // Extract info from data-* attributes
-    var company = button.data('title'); // Extract info from data-* attributes
-    var user_link = button[0].dataset.userLink;
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
-    modal.find('.modal-title').text('Add/Edit link for ' + company);
-    modal.find('#modal-save')[0].dataset.id = id;
-    modal.find('#link-to-site').val(user_link);
-  })
+  $('#exampleModal').on('show.bs.modal', loadModalData);
+  $('.ssr-updated').on('click', addUpdated)
+  $('.ssr-denied').on('click', addDenied)
+  
   return $('#modal-save').on("click", saveLink);
 });
+
+addUpdated = function(e) {
+  console.log('test');
+  ssr = this.dataset
+  return $.ajax({
+    type: 'POST',
+    url: '/saved_search_result/updated',
+    dataType: 'json',
+    data: {
+      saved_search_result: ssr
+    },
+    beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+    success: function(data, textStatus) {
+      console.log('testing');
+      $('#'+editLink.replace('.','\\.'))[0].dataset.userLink = data.link;
+      $('#link-to-site').val('');
+      $('#exampleModal').modal('hide')
+    }
+  });
+};
+
+addDenied = function(e) {
+  console.log('test');
+  ssr = this.dataset
+  return $.ajax({
+    type: 'POST',
+    url: '/saved_search_result/denied',
+    dataType: 'json',
+    data: {
+      saved_search_result: ssr
+    },
+    beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+    success: function(data, textStatus) {
+      console.log('testing');
+      $('#'+editLink.replace('.','\\.'))[0].dataset.userLink = data.link;
+      $('#link-to-site').val('');
+      $('#exampleModal').modal('hide')
+    }
+  });
+};
+
+loadModalData = function(e) {
+  var button = $(e.relatedTarget); // Button that triggered the modal
+  var id = button.data('id'); // Extract info from data-* attributes
+  var company = button.data('title'); // Extract info from data-* attributes
+  var user_link = button[0].dataset.userLink;
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this);
+  modal.find('.modal-title').text('Add/Edit link for ' + company);
+  modal.find('#modal-save')[0].dataset.id = id;
+  modal.find('#link-to-site').val(user_link);
+};
 
 saveLink = function(e) {
   e.stopPropagation();
@@ -64,4 +109,4 @@ saveLink = function(e) {
  function is_valid_url(s) {    
   var regexp = /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
   return regexp.test(s);    
- }
+ };
