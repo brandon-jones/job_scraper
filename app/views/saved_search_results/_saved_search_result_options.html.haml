@@ -8,6 +8,6 @@
     %li{:role => "presentation"}
       %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Denied
     %li{:role => "presentation"}
-      = link_to 'Delete', "/#{saved_search_result.class.to_s.underscore.pluralize}?score=#{saved_search_result.score}", method: :delete, data: { confirm: 'Are you sure?' }
+      = link_to 'Delete', "/#{saved_search_result.class.to_s.underscore.pluralize}?score=#{saved_search_result.html_score}", method: :delete, data: { confirm: 'Are you sure?' }
     %li{:role => "presentation"}
-      %a{:href => "#", id: "edit-link-#{saved_search_result.score}",:role => "menuitem", :tabindex => "-1", data: {toggle: 'modal', target: "#exampleModal", id: "#{saved_search_result.score}", title: "#{saved_search_result.company}", user_link: "#{saved_search_result.user_link}" }} Add link to Site
+      %a{:href => "#", id: "edit-link-#{saved_search_result.html_score}",:role => "menuitem", :tabindex => "-1", data: {toggle: 'modal', target: "#exampleModal", id: "#{saved_search_result.html_score}", title: "#{saved_search_result.company}", user_link: "#{saved_search_result.user_link}" }} Add link to Site

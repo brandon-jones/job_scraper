@@ -1,8 +1,4 @@
 $(document).ready(function() {
-  $(".clickable-row").click(function() {
-      window.document.location = $(this).data("href");
-  });
-
   return $('.apply-for-job').on("click", applyForJob);
 });
 

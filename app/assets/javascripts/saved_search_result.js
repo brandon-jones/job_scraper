@@ -40,7 +40,7 @@ saveLink = function(e) {
         var a = document.createElement('a');
         var linkText = document.createTextNode(data.company);
 
-        var row = $('tr#'+data.id+'-row');
+        var row = $('tr#'+data.id.replace('.','\\.')+'-row');
         var td = row.find('td').first()
 
         if (data.link.length > 0) {
@@ -54,7 +54,7 @@ saveLink = function(e) {
           td.text(linkText.textContent);
         }
 
-        $('#'+editLink)[0].dataset.userLink = data.link;
+        $('#'+editLink.replace('.','\\.'))[0].dataset.userLink = data.link;
         $('#link-to-site').val('');
         $('#exampleModal').modal('hide')
       }

@@ -13,11 +13,10 @@ class User < ActiveRecord::Base
   end
 
   def saved_searches
-    saved_searches = SavedSearch.new
-    return saved_searches.all(self.id)
+    return SavedSearch.all self
   end
 
   def saved_search_results
-    return SavedSearchResult.all(self.id)
+    return SavedSearchResult.all self
   end
 end

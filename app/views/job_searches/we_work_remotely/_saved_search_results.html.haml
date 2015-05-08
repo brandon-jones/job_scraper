@@ -24,7 +24,11 @@
   - saved_search.results.sort_by { |k| k.date }.reverse.each do |result|
     %tr.clickable-row{ data: { href: "#{result.link}" } }
       %td= result.company
-      %td= result.title
+      %td
+        - if result.link && result.link.length > 0
+          = link_to result.title, result.link, { target: '_blank', title: "#{result.link}" }
+        - else
+          = result.title
       %td= result.date
       %td
         - unless result.applied

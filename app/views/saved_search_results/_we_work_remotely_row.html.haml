@@ -1,4 +1,4 @@
-%tr.test{id: "#{saved_search_result.score}-row"}
+%tr{id: "#{saved_search_result.html_score}-row"}
   %td
     - if saved_search_result.user_link && saved_search_result.user_link.length > 0
       = link_to saved_search_result.company, saved_search_result.user_link, { target: '_blank', title: "#{saved_search_result.user_link}" }

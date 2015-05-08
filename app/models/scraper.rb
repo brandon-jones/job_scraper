@@ -3,7 +3,7 @@ class Scraper
     users = User.all
     saved_searches = []
     users.each do |user|
-      ss = SavedSearch.new
+      ss = SavedSearch.new(user)
       ss_all = user.saved_searches
       saved_searches += ss_all if ss_all
     end
@@ -24,7 +24,8 @@ class Scraper
       search_results = job_search.build_search_results(saved_search,response.body)
 
       search_results.each do |search_result|
-        SearchResult.add(saved_search.saved_search_id, search_result)
+        sr = SearchResult.new(saved_search.saved_search_id)
+        sr.add(search_result)
         # saved_search.add_result(search_result)
       end
 
@@ -45,10 +46,6 @@ class Scraper
     else
       response.value
     end
-  end
-
-  def self.scrape_for_user(user_id)
-
   end
 
 end
