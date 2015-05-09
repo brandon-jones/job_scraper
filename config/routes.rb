@@ -2,9 +2,21 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  get '/user/applied_jobs', to: 'saved_search_results#index'
+
   get 'job_searches', to: 'job_searches#index'
+  post 'update_link_saved_job', to: 'saved_search_results#update_link'
+  post 'saved_search_result/updated', to: 'saved_search_results#updated'
+  post 'saved_search_result/denied', to: 'saved_search_results#denied'
+  post 'we_work_remotelies', to: 'saved_searches#create'
+
+  post 'apply_for_job', to: 'saved_search_results#create'
 
   root to: "static_pages#home"
+
+  delete 'saved_search_results', to: 'saved_search_results#destroy', as: 'destory_saved_search_results'
+  delete 'saved_searchs', to: 'saved_searchs#destroy', as: 'destory_saved_searchs'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

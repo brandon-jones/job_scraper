@@ -2,3 +2,9 @@
   height: auto;
   width: 10em;
 }
+
+.clickable-row{
+  &:hover{
+    background-color: #cccccc;
+  }
+}

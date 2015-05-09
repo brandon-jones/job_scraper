@@ -1,7 +1,8 @@
 class StaticPagesController < ApplicationController
 
   def home
-    @saved_searches = []
+    Scraper.scrape_all
+    @saved_searches = current_user ? current_user.saved_searches : []
   end
 
 end
