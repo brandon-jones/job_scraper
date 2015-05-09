@@ -1,4 +1,4 @@
-class Users::SessionsController < Devise::SessionsController
+class UsersController < Devise::SessionsController
   def new
 
   end
