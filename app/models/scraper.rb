@@ -1,5 +1,5 @@
 class Scraper
-  include 'net/http'
+  require 'net/http'
   
   def self.scrape_all
     users = User.all
