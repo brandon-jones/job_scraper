@@ -1,4 +1,6 @@
 class Scraper
+  include 'net/http'
+  
   def self.scrape_all
     users = User.all
     saved_searches = []
