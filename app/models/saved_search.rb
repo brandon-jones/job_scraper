@@ -61,4 +61,9 @@ class SavedSearch < RedisModel
     end
   end
 
+  def destroy
+    $redis.del("#{SearchResult.key}:#{self.saved_search_id}")
+    super
+  end
+
 end

@@ -4,7 +4,6 @@
   %tbody
     - if @saved_search_result && @saved_search_result.count > 0
       - @saved_search_result.each do |ssr|
-        - binding.pry
         = render partial: "saved_search_results/#{ssr.type.underscore}_row.html", locals: { saved_search_result: ssr }
     - else
       You have no applied for jobs

@@ -17,11 +17,10 @@ Rails.application.routes.draw do
 
   namespace :saved_searches do
     get 'new'
+    delete 'destroy'
   end
 
   post 'we_work_remotelies', to: 'saved_searches#create'
 
   root to: "static_pages#home"
-
-  delete 'saved_searchs', to: 'saved_searchs#destroy', as: 'destory_saved_searchs'
 end

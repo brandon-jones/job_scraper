@@ -28,10 +28,6 @@ class SavedSearchResultsController < ApplicationController
     end
   end
 
-  def add_key
-    binding.pryparam
-  end
-
   def update_link
     redirect_to root_url and return unless current_user
     respond_to do |format|

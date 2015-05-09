@@ -85,7 +85,6 @@ class RedisModel < Hashie::Mash
     when 'override'
       self[key] = value
     when 'build'
-
       self[key] = [] unless self[key]
       self[key] << value
     end
@@ -104,11 +103,6 @@ class RedisModel < Hashie::Mash
   def html_score
     return self.score
   end
-
-  # def destory
-  #   return self.class.remove_by_score(current_user.id, self.score)
-
-  # end
 
   def destroy
     return $redis.zremrangebyscore("#{redis_key}",score.to_f,score.to_f)
@@ -129,7 +123,4 @@ class RedisModel < Hashie::Mash
     return builder
   end
 
-  # def destroy_path
-  #   return "destroy_#{self.class.to_s.underscore}s_url"
-  # end
 end

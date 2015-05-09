@@ -3,10 +3,15 @@
     %th Search Site
     - saved_search.job_search.headers.each do |header|
       %th= header
+    %th
+      Delete
   %tr
     %td= saved_search.job_search.name
     - saved_search.user_data.keys.each do |key|
       %td= saved_search.user_data[key]
+    %th
+      = link_to 'Delete', "/saved_searches/destroy?score=#{saved_search.score}", method: :delete, data: { confirm: 'Are you sure? This will remove the search results as well but NOT your applied jobs' }
+
 %p
   %strong
     Results from saved Search
