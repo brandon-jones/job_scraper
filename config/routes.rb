@@ -2,14 +2,15 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  get '/user/applied_jobs', to: 'saved_search_results#index'
+  devise_scope :user do
+    get 'users/:id/applied_jobs', to: 'users#applied_jobs', as: 'applied_jobs_user'
+    get 'users/:id/saved_searches', to: 'users#saved_searches', as: 'saved_searches_user'
+  end
 
-  get 'job_searches', to: 'job_searches#index'
   post 'update_link_saved_job', to: 'saved_search_results#update_link'
   post 'saved_search_result/updated', to: 'saved_search_results#updated'
   post 'saved_search_result/denied', to: 'saved_search_results#denied'
   post 'we_work_remotelies', to: 'saved_searches#create'
-
   post 'apply_for_job', to: 'saved_search_results#create'
 
   root to: "static_pages#home"

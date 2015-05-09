@@ -1,0 +1,9 @@
+%p
+  %a{:href => "#{job_searches_path}"}
+    New Saved Search
+%br
+  - if @saved_searches.count > 0
+    - @saved_searches.each do |saved_search|
+      = render partial: "job_searches/#{saved_search.job_search.type.underscore}/saved_search_results.html", locals: { saved_search: saved_search }
+  - else
+    You have no saved searches

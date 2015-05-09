@@ -10,3 +10,14 @@
 .deleted {
   background-color: #ffabab;
 }
+
+.job-logo {
+  width: 100%;
+}
+
+#error_explanation {
+  color: red;
+  & h2 {
+    font-size: 125%;
+  }
+}
