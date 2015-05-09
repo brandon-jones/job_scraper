@@ -32,6 +32,8 @@ gem 'redis', '~> 3.2.1'
 
 gem 'nokogiri', '~> 1.6.6.2'
 
+gem 'rails_12factor', group: :production
+
 gem 'local_time', '~> 1.0.1'
 
 # Use ActiveModel has_secure_password
