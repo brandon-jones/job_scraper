@@ -37,10 +37,10 @@ test:
 
 production:
   adapter: postgresql
-  host: localhost
+  host: <%= ENV['JS_DB_HOST'] %>
   port: 5432
   encoding: unicode
-  database: JobScraper
+  database: <%= ENV['JS_DB_DATABASE'] %>
   pool: 5
   username: <%= ENV['JS_DB_USER'] %>
   password: <%= ENV['JS_DB_PASSWORD'] %>
