@@ -9,4 +9,4 @@
   %td
     = local_time(saved_search_result.to_time('date_applied'))
   %td
-    = render partial: 'saved_search_result_options', locals: { saved_search_result: saved_search_result }
+    = render partial: 'saved_search_results/saved_search_result_options', locals: { saved_search_result: saved_search_result }

@@ -82,14 +82,13 @@ class RedisModel < Hashie::Mash
     case status
     when 'ignore'
       self[key] = value unless self[key]
-    when 'orverride'
+    when 'override'
       self[key] = value
     when 'build'
-      binding.pry
+
       self[key] = [] unless self[key]
       self[key] << value
     end
-    
 
     if destroy
       return add(self, self)

@@ -7,11 +7,10 @@ $(document).ready(function() {
 });
 
 addUpdated = function(e) {
-  console.log('test');
   ssr = this.dataset
   return $.ajax({
     type: 'POST',
-    url: '/saved_search_result/updated',
+    url: '/saved_search_results/updated',
     dataType: 'json',
     data: {
       saved_search_result: ssr
@@ -27,11 +26,10 @@ addUpdated = function(e) {
 };
 
 addDenied = function(e) {
-  console.log('test');
   ssr = this.dataset
   return $.ajax({
     type: 'POST',
-    url: '/saved_search_result/denied',
+    url: '/saved_search_results/denied',
     dataType: 'json',
     data: {
       saved_search_result: ssr
@@ -73,7 +71,7 @@ saveLink = function(e) {
     link = $('#link-to-site').val();
     return $.ajax({
       type: 'POST',
-      url: '/update_link_saved_job',
+      url: '/saved_search_results/update_link',
       dataType: 'json',
       data: {
         id: id,

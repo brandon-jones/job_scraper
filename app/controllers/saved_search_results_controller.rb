@@ -28,6 +28,10 @@ class SavedSearchResultsController < ApplicationController
     end
   end
 
+  def add_key
+    binding.pryparam
+  end
+
   def update_link
     redirect_to root_url and return unless current_user
     respond_to do |format|
@@ -55,13 +59,13 @@ class SavedSearchResultsController < ApplicationController
           sr = SearchResult.find_by_score(model.parent_unique_id, params["score"])
           if sr.add_key_value('deleted', DateTime.now.utc.to_f.to_s, 'override')
             format.json { render :json=>true }
-            format.html { redirect_to applied_jobs_user_path(current_user) }
+            format.html { redirect_to saved_search_results_user_path(current_user) }
           else
             format.json { render :json => 'errors', :status => :unprocessable_entity }
           end
         end
       end
-      format.html { redirect_to applied_jobs_user_path(current_user) }
+      format.html { redirect_to saved_search_results_user_path(current_user) }
       format.json { render :json => 'errors', :status => :unprocessable_entity }
     end
   end

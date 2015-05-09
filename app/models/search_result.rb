@@ -41,18 +41,8 @@ class SearchResult < RedisModel
     $redis.zremrangebyscore("#{key}:#{saved_search_id}", -1, (DateTime.now.utc - TIME_TO_LIVE.to_f).to_f)
   end
 
-  # def add_applied_key(user, saved_search)
-  #   SearchResult.new(saved_search["saved_search_id"]).remove_by_score(saved_search["score"])
-  #   self["applied"] = true
-  #   SearchResult.new(aved_search_id).add(self.except("saved_search_id"),saved_search.to_hash)
-  # end
-
-  # def self.add_deleted_key(user, saved_search_score)
-  #   binding.pry
-  # end
-
   def self.applied_to_job(current_user_id, saved_search)
-    if job = self.find_by_member(saved_search['saved_search_id'], saved_search)
+    if job = self.find_by_member(saved_search['parent_unique_id'], saved_search)
       if new_job = job.add_key_value('applied', DateTime.now.utc.to_f.to_s, 'override')
         return new_job
       else

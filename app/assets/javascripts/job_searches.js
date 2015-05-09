@@ -14,7 +14,7 @@ applyForJob = function(e) {
   });
   return $.ajax({
     type: 'POST',
-    url: '/apply_for_job',
+    url: '/saved_search_results/create',
     dataType: 'json',
     data: {
       saved_search: saved_search,
