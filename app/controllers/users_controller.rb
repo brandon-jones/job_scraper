@@ -9,6 +9,7 @@ class UsersController < Devise::SessionsController
   end
 
   def applied_jobs
-    binding.pry
+    return [] unless current_user
+    @saved_search_result = current_user.saved_search_results
   end
 end

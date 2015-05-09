@@ -3,9 +3,11 @@ Rails.application.routes.draw do
   devise_for :users
 
   devise_scope :user do
-    get 'users/:id/applied_jobs', to: 'users#applied_jobs', as: 'applied_jobs_user'
+    get 'users/:id/saved_search_results', to: 'users#saved_search_results', as: 'saved_search_results_user'
     get 'users/:id/saved_searches', to: 'users#saved_searches', as: 'saved_searches_user'
   end
+
+  
 
   post 'update_link_saved_job', to: 'saved_search_results#update_link'
   post 'saved_search_result/updated', to: 'saved_search_results#updated'
