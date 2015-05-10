@@ -7,9 +7,9 @@ class MyMailer < Devise::Mailer
   
   def reset_password_instructions(record, token, opts={})
     if Rails.env == 'production'
-      domain = 'http://job-hunt.herokuapp.com/'
+      domain = 'http://job-hunt.herokuapp.com'
     else
-      domain = 'http://localhost:3003/'
+      domain = 'http://localhost:3003'
     end
     options = {
       :subject => "Password Reset",
