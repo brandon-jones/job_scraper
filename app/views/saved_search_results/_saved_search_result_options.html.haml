@@ -1,0 +1,13 @@
+.dropdown
+  %button#saved-search-result-option-dropdown.btn.btn-default.btn-sm.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+    Options
+    %span.caret
+  %ul.dropdown-menu{"aria-labelledby" => "saved-search-result-option-dropdown", :role => "menu"}
+    %li{:role => "presentation"}
+      %a.ssr-updated{:href => "#", :role => "menuitem", :tabindex => "-1", data: saved_search_result} Update
+    %li{:role => "presentation"}
+      %a.ssr-denied{:href => "#", :role => "menuitem", :tabindex => "-1", data: saved_search_result} Denied
+    %li{:role => "presentation"}
+      = link_to 'Delete', "/saved_search_results/destroy?score=#{saved_search_result.html_score}", method: :delete, data: { confirm: 'Are you sure?' }
+    %li{:role => "presentation"}
+      %a{:href => "#", id: "edit-link-#{saved_search_result.html_score}",:role => "menuitem", :tabindex => "-1", data: {toggle: 'modal', target: "#exampleModal", id: "#{saved_search_result.html_score}", title: "#{saved_search_result.company}", user_link: "#{saved_search_result.user_link}" }} Add link to Site

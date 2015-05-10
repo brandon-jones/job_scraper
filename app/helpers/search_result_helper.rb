@@ -1,0 +1,3 @@
+module SearchResultHelper
+  
+end

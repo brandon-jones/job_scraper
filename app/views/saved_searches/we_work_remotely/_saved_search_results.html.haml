@@ -1,0 +1,45 @@
+%table.table
+  %tr
+    %th Search Site
+    - saved_search.job_search.headers.each do |header|
+      %th= header
+    %th
+      Delete
+  %tr
+    %td= saved_search.job_search.name
+    - saved_search.user_data.keys.each do |key|
+      %td= saved_search.user_data[key]
+    %th
+      = link_to 'Delete', "/saved_searches/destroy?score=#{saved_search.score}", method: :delete, data: { confirm: 'Are you sure? This will remove the search results as well but NOT your applied jobs' }
+
+%p
+  %strong
+    Results from saved Search
+%table.table
+  %tr
+    %th
+      Company
+    %th
+      Job Title
+    %th
+      Date Posted
+    %th
+      Apply
+  - saved_search.results.sort_by { |k| k.date }.reverse.each do |result|
+  - options = {}
+    - if result.applied.present?
+      - options = { class: 'applied', title: "#{local_time(result.to_time('applied'))}" }
+    - if result.deleted.present?
+      - options = { class: 'deleted', title: "#{local_time(result.to_time('deleted'))}" }
+    %tr{ options, data: { href: "#{result.link}" } }
+      %td= result.company
+      %td
+        - if result.link && result.link.length > 0
+          = link_to result.title, result.link, { target: '_blank', title: "#{result.link}" }
+        - else
+          = result.title
+      %td= result.date
+      %td
+        - unless result.applied
+          %button.btn.btn-default.btn-xs.apply-for-job{ data: { result: result, saved_search_id: saved_search.saved_search_id } }
+            Applied

@@ -27,4 +27,11 @@ RSpec.describe User, type: :model do
     user = FactoryGirl.create(:user, email: "BOB@BOB.com")
     expect(user.email).to eq("bob@bob.com")
   end
+
+  it "should return an array of saved searches" do
+    user = FactoryGirl.create(:user)
+    expect(user.saved_searches).to eq([])
+    job_search = FactoryGirl.create(:job_search)
+    saved_searches = FactoryGirl.create(:saved_searches)
+  end
 end

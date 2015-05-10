@@ -11,4 +11,12 @@ class User < ActiveRecord::Base
   def fix_case
     self.email = self.email.downcase
   end
+
+  def saved_searches
+    return SavedSearch.all self
+  end
+
+  def saved_search_results
+    return SavedSearchResult.all self
+  end
 end

@@ -1,0 +1,12 @@
+- @job_searches.each do |j|
+  %table.table
+    %tbody
+      %tr.clickable.show-saved-search-form{ data: { id: "#{j.id}" } }
+        %td= image_tag(j.image, class: 'job-search-image')
+        %td= link_to j.name, j.homepage, target: "_blank"
+        %td= j.description
+      %tr{style: 'display:none;', id: "saved-search-#{j.id}-form"}
+        %td{colspan: 3}
+          - partial_name = j.type.split(/(?=[A-Z])/).join('_').downcase
+          - partial_var = j.type.constantize.new
+          = render partial: "#{partial_name}", locals: { job_search: j, new_job_search: partial_var, options: j.options }

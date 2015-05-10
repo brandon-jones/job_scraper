@@ -7,16 +7,16 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.navbar-brand{:href => "/"}
-        = image_tag("logo.png", :alt => "Brand", id: 'brand-icon')
+      %a.navbar-brand{:href => "#{current_user ? saved_searches_user_path(current_user) : root_path}"}
+        = image_tag("logo.png", :alt => "Job Scraper", id: 'brand-icon')
     / Collect the nav links, forms, and other content for toggling
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
-      - puts params
       - selected = params["controller"] + "_" + params["action"]
       %ul.nav.navbar-nav
-        %li{:role => "presentation", class: "#{'active' if selected == 'static_pages_contact_me' }"}
-          %a{:href => "/contact_me"}
-            Applied Jobs
+        - if current_user
+          %li{:role => "presentation", class: "#{'active' if selected == 'static_pages_contact_me' }"}
+            %a{:href => "#{saved_search_results_user_path(current_user)}"}
+              Applied Jobs
       %ul.nav.navbar-nav.navbar-right
         - if current_user
           %li.dropdown

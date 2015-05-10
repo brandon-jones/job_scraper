@@ -1,7 +1,25 @@
-%a{:href => "/contact_me"}
-  New Saved Search
-%br
-- if @saved_searches.count > 0
-  = @saved_searches
-- else
-  You have no saved searches
+.row
+  .col-md-10.col-md-offset-1
+    %h1.text-center
+      Tired of checking 10+ job sites daily for tech jobs!
+    %h4.text-center
+      Let me check for you. All you need to do to start is
+      - if current_user
+        = link_to 'created saved searches', saved_searches_user_path(current_user)
+      - else
+        = link_to 'sign up', new_user_password_path
+.row
+  .col-md-10.col-md-offset-1
+    %h3.text-center
+      I am adding new sites to scrape all the time!
+    %h2.text-center
+      Right now I can check the below sites.
+.row
+  - @all_job_searches.each do |job_search|
+    .col-md-4
+      %a{href: job_search.homepage, target: '_blank'}
+        = image_tag job_search.image, class: 'job-logo'
+.row
+  .col-md-10.col-md-offset-1
+    %h2.text-center
+      Eventually I will check the sites nightly and email/text you updates. For now you must check this site sorry.

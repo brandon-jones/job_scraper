@@ -1,0 +1,27 @@
+#brand-icon {
+  width: auto;
+  height: 1.5em;
+}
+
+.applied {
+  background-color: #b8bcff;
+}
+
+.deleted {
+  background-color: #ffabab;
+}
+
+.job-logo {
+  width: 100%;
+}
+
+#error_explanation {
+  color: red;
+  & h2 {
+    font-size: 125%;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}

@@ -21,10 +21,20 @@ gem 'haml-rails', '~> 0.8.2'
 
 gem 'devise'
 
+gem 'hashie'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+
+gem 'redis', '~> 3.2.1'
+
+gem 'nokogiri', '~> 1.6.6.2'
+
+gem 'rails_12factor', group: :production
+
+gem 'local_time', '~> 1.0.1'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
