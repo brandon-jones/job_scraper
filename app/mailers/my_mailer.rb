@@ -1,16 +1,25 @@
 class MyMailer < Devise::Mailer
  
   def confirmation_instructions(record, token, opts={})
-    binding.pry
-    # code to be added here later
+    options = {
+      :subject => "Job Hunt Email Confirmation",
+      :email => record.email,
+      :global_merge_vars => [
+        {
+          name: "confirmation_link",
+          content: "#{domain}/users/confirmation?confirmation_token=#{token}"
+        },
+        {
+          name: "email",
+          content: record.email
+        }
+      ],
+      :template => "confirmation"
+    }
+    mandrill_send options  
   end
   
   def reset_password_instructions(record, token, opts={})
-    if Rails.env == 'production'
-      domain = 'http://job-hunt.herokuapp.com'
-    else
-      domain = 'http://localhost:3003'
-    end
     options = {
       :subject => "Password Reset",
       :email => record.email,
@@ -20,7 +29,7 @@ class MyMailer < Devise::Mailer
           content: "#{domain}/users/password/edit?reset_password_token=#{token}"
         },
         {
-          name: "user_name",
+          name: "email",
           content: record.email
         }
       ],
@@ -30,7 +39,31 @@ class MyMailer < Devise::Mailer
   end
   
   def unlock_instructions(record, token, opts={})
-    # code to be added here later
+    options = {
+      :subject => "Job Hunt Account Unlock",
+      :email => record.email,
+      :global_merge_vars => [
+        {
+          name: "unlock_link",
+          content: "#{domain}/users/unlock?unlock_token=#{token}"
+        },
+        {
+          name: "email",
+          content: record.email
+        }
+      ],
+      :template => "confirmation"
+    }
+    mandrill_send options  
+  end
+
+  def domain
+    return @domain unless @domain
+    if Rails.env == 'production'
+      return @domain = 'http://job-hunt.herokuapp.com'
+    else
+      return @domain = 'http://localhost:3003'
+    end
   end
   
   def mandrill_send(opts={})

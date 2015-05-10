@@ -12,11 +12,20 @@
     %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"}
   %body
     .container-fluid
+      .row.spacer
+        .col-md-12
+      .row
+        .col-md-12
+          = render 'layouts/messages'
       .row
         .col-md-12
           = render partial: 'layouts/top_nav'
       .row
         .col-md-10.col-sm-offset-1
-          %p.notice= notice
-          %p.alert= alert
           = yield
+      - if Rails.env == 'development'
+        .row
+          .col-md-12
+            %br
+            %br
+            = debug params
