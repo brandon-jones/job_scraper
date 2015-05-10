@@ -21,7 +21,7 @@ class MyMailer < Devise::Mailer
   
   def reset_password_instructions(record, token, opts={})
     options = {
-      :subject => "Password Reset",
+      :subject => "Job Hunt Password Reset",
       :email => record.email,
       :global_merge_vars => [
         {
