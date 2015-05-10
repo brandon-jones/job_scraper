@@ -2,9 +2,20 @@ $(document).ready(function() {
   $('#exampleModal').on('show.bs.modal', loadModalData);
   $('.ssr-updated').on('click', addUpdated)
   $('.ssr-denied').on('click', addDenied)
+  $('.show-saved-search-form').on('click', showSavedSearchCreation)
+
   
   return $('#modal-save').on("click", saveLink);
 });
+
+showSavedSearchCreation = function(e) {
+  var trRow = $("#saved-search-"+this.dataset.id+"-form");
+  if (trRow[0].style.display == "none") {
+    trRow.show(200, 'linear')
+  } else {
+    trRow.hide(200, 'linear');
+  }
+};
 
 addUpdated = function(e) {
   ssr = this.dataset
