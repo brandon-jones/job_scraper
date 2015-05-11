@@ -1,4 +1,8 @@
 class MyMailer < Devise::Mailer
+
+  def domain
+    return Rails.env == 'production' ? 'http://job-hunt.herokuapp.com' : 'http://localhost:3003'
+  end
  
   def confirmation_instructions(record, token, opts={})
     options = {
@@ -25,7 +29,7 @@ class MyMailer < Devise::Mailer
       :email => record.email,
       :global_merge_vars => [
         {
-          name: "password_reset_link",
+          name: "reset_password_link",
           content: "#{domain}/users/password/edit?reset_password_token=#{token}"
         },
         {
@@ -55,15 +59,6 @@ class MyMailer < Devise::Mailer
       :template => "confirmation"
     }
     mandrill_send options  
-  end
-
-  def domain
-    return @domain unless @domain
-    if Rails.env == 'production'
-      return @domain = 'http://job-hunt.herokuapp.com'
-    else
-      return @domain = 'http://localhost:3003'
-    end
   end
   
   def mandrill_send(opts={})
