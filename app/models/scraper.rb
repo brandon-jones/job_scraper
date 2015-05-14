@@ -5,14 +5,18 @@ class Scraper
     users = User.all
     saved_searches = []
     users.each do |user|
+      puts "gettin saved searches for user #{user.id}"
       ss = SavedSearch.new(user)
       ss_all = user.saved_searches
+      puts "found #{ss_all}" if ss_all
       saved_searches += ss_all if ss_all
     end
 
     saved_searches.uniq!
 
     saved_searches.each do |saved_search|
+
+      puts "checking saved search #{saved_search}"
 
       job_search = JobSearch.find_by_id(saved_search.job_search)
       search_url = job_search.search_url
@@ -21,12 +25,15 @@ class Scraper
         search_url = search_url.gsub("{{#{key}}}",saved_search.send(key).to_s)
       end
 
+      puts "new url #{search_url}"
+
       response = fetch(search_url,3)
 
       search_results = job_search.build_search_results(saved_search,response.body)
 
       search_results.each do |search_result|
         sr = SearchResult.new(saved_search.saved_search_id)
+        puts "adding search result #{search_result}"
         sr.add(search_result)
         # saved_search.add_result(search_result)
       end

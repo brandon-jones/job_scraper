@@ -12,7 +12,7 @@ class SearchResult < RedisModel
   end
 
   def self.unique_keys
-    return @unique_keys ||= [ "score", "applied", "saved_search_id", "parent_unique_id", "deleted" ]
+    return @unique_keys ||= [ "score", "applied", "saved_search_id", "parent_unique_id", "deleted", "viewed" ]
   end
 
   def self.score
