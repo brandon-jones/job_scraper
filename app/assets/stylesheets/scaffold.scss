@@ -11,6 +11,10 @@
   background-color: #ffabab;
 }
 
+.never-viewed {
+  background-color: #ffff91
+}
+
 .job-logo {
   width: 100%;
 }
@@ -24,15 +28,6 @@
 
 .clickable {
   cursor: pointer;
-}
-
-.alert {
-  color: red;
-  text-align: center;
-}
-
-.notice {
-  text-align: center;
 }
 
 ul.no-bullets {

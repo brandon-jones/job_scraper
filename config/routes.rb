@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   namespace :saved_searches do
     get 'new'
     delete 'destroy'
+    post 'viewed'
   end
 
   post 'we_work_remotelies', to: 'saved_searches#create'

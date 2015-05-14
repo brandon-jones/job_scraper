@@ -28,4 +28,16 @@ class SavedSearchesController < ApplicationController
     end
   end
 
+  def viewed
+    respond_to do |format|
+      if params["score"] && params["parent_unqiue_id"] && current_user
+        sr = SearchResult.find_by_score(params["parent_unqiue_id"], params["score"])
+        sr.add_key_value('viewed', DateTime.now.utc.to_f.to_s, 'override')
+        format.json { render :json=>true }
+      else
+        format.json { render :json => 'errors', :status => :unprocessable_entity }
+      end
+    end
+  end
+
 end

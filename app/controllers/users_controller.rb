@@ -3,7 +3,6 @@ class UsersController < Devise::SessionsController
   end
 
   def saved_searches
-    Scraper.scrape_all
     @saved_searches = current_user ? current_user.saved_searches : []
   end
 

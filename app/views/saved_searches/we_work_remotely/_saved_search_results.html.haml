@@ -1,21 +1,21 @@
 %table.table
   %tr
-    %th Search Site
-    - saved_search.job_search.headers.each do |header|
-      %th= header
-    %th
-      Delete
-  %tr
     %td= saved_search.job_search.name
     - saved_search.user_data.keys.each do |key|
-      %td= saved_search.user_data[key]
+      %td
+        - if ['Search Site','Delete'].include?(key)
+          = "#{saved_search.user_data[key]}:" 
+        - else
+          %strong
+            = key.titleize
+          = "#{saved_search.user_data[key]}"
     %th
       = link_to 'Delete', "/saved_searches/destroy?score=#{saved_search.score}", method: :delete, data: { confirm: 'Are you sure? This will remove the search results as well but NOT your applied jobs' }
 
 %p
   %strong
     Results from saved Search
-%table.table
+%table.table{ data: { saved_search_id: saved_search.saved_search_id } }
   %tr
     %th
       Company
@@ -31,7 +31,10 @@
       - options = { class: 'applied', title: "#{local_time(result.to_time('applied'))}" }
     - if result.deleted.present?
       - options = { class: 'deleted', title: "#{local_time(result.to_time('deleted'))}" }
-    %tr{ options, data: { href: "#{result.link}" } }
+    - unless result.viewed.present?
+      - options['class'] = '' unless options['class']
+      - options['class'] = options['class'] + ' never-viewed'
+    %tr{ options, data: { href: "#{result.link}", score: "#{result.score}", parent_unqiue_id: "#{result.parent_unique_id}" } }
       %td= result.company
       %td
         - if result.link && result.link.length > 0
