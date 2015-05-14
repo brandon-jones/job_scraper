@@ -38,6 +38,8 @@ gem 'local_time', '~> 1.0.1'
 
 gem 'mandrill-api'
 
+gem 'mock_redis', '~> 0.14.1'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
