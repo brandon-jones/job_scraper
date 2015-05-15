@@ -1,8 +1,4 @@
 class MyMailer < Devise::Mailer
-
-  def domain
-    return Rails.env == 'production' ? 'http://job-hunt.herokuapp.com' : 'http://localhost:3003'
-  end
  
   def confirmation_instructions(record, token, opts={})
     options = {
@@ -11,7 +7,7 @@ class MyMailer < Devise::Mailer
       :global_merge_vars => [
         {
           name: "confirmation_link",
-          content: "#{domain}/users/confirmation?confirmation_token=#{token}"
+          content: "#{$domain}/users/confirmation?confirmation_token=#{token}"
         },
         {
           name: "email",
@@ -20,7 +16,7 @@ class MyMailer < Devise::Mailer
       ],
       :template => "confirmation"
     }
-    mandrill_send options  
+    mandrill_send options
   end
   
   def reset_password_instructions(record, token, opts={})
@@ -30,7 +26,7 @@ class MyMailer < Devise::Mailer
       :global_merge_vars => [
         {
           name: "reset_password_link",
-          content: "#{domain}/users/password/edit?reset_password_token=#{token}"
+          content: "#{$domain}/users/password/edit?reset_password_token=#{token}"
         },
         {
           name: "email",
@@ -39,7 +35,7 @@ class MyMailer < Devise::Mailer
       ],
       :template => "reset-password"
     }
-    mandrill_send options  
+    mandrill_send options
   end
   
   def unlock_instructions(record, token, opts={})
@@ -49,7 +45,7 @@ class MyMailer < Devise::Mailer
       :global_merge_vars => [
         {
           name: "unlock_link",
-          content: "#{domain}/users/unlock?unlock_token=#{token}"
+          content: "#{$domain}/users/unlock?unlock_token=#{token}"
         },
         {
           name: "email",
@@ -58,10 +54,11 @@ class MyMailer < Devise::Mailer
       ],
       :template => "confirmation"
     }
-    mandrill_send options  
+    mandrill_send options
   end
   
   def mandrill_send(opts={})
+    return if Rails.env == 'test'
     message = { 
       :subject=> "#{opts[:subject]}", 
       :from_name=> "job hunt",

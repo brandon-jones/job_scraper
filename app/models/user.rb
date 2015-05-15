@@ -19,4 +19,26 @@ class User < ActiveRecord::Base
   def saved_search_results
     return SavedSearchResult.all self
   end
+
+  def notify_new_jobs
+    if self.confirmed_at
+      options = {
+      :subject => "Job Hunt Jobs Updated",
+      :email => self.email,
+      :global_merge_vars => [
+        {
+          name: "email",
+          content: "#{self.email}"
+        },
+        {
+          name: "job_link",
+          content: "#{$domain}/users/#{self.id}/saved_searches"
+        }
+      ],
+      :template => "updated-jobs"
+      }
+
+      MyMailer.mandrill_send options
+    end
+  end
 end

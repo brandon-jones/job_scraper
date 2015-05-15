@@ -40,4 +40,18 @@ class SavedSearchesController < ApplicationController
     end
   end
 
+  def refresh
+    respond_to do |format|
+      if params["score"] && params["parent_unique_id"]
+        ss = SavedSearch.find_by_score(params["parent_unique_id"],params["score"])
+        if ss.refresh
+          format.json { render :json=>true }
+        else
+          format.json { render :json=>'No new jobs' }
+        end
+      end
+      format.json { render :json => 'errors', :status => :unprocessable_entity }
+    end
+  end
+
 end

@@ -1,44 +1,87 @@
 class Scraper
   require 'net/http'
   
+  # while being more efficent i needed a way to track user ids
+  # def self.scrape_all
+  #   users = User.all
+  #   saved_searches = []
+  #   users.each do |user|
+  #     ss = SavedSearch.new(user)
+  #     ss_all = user.saved_searches
+  #     saved_searches += ss_all if ss_all
+  #   end
+
+  #   saved_searches.uniq!
+
+  #   saved_searches.each do |saved_search|
+
+
+  #     job_search = JobSearch.find_by_id(saved_search.job_search)
+  #     search_url = job_search.search_url
+
+  #     saved_search.keys.each do |key|
+  #       search_url = search_url.gsub("{{#{key}}}",saved_search.send(key).to_s)
+  #     end
+
+
+  #     response = fetch(search_url,3)
+
+  #     search_results = job_search.build_search_results(saved_search,response.body)
+
+  #     search_results.each do |search_result|
+  #       sr = SearchResult.new(saved_search.saved_search_id)
+  #       sr.add(search_result)
+  #       # saved_search.add_result(search_result)
+  #     end
+
+  #   end
+  # end
+
   def self.scrape_all
     users = User.all
+    user_ids = []
     saved_searches = []
     users.each do |user|
-      puts "gettin saved searches for user #{user.id}"
-      ss = SavedSearch.new(user)
-      ss_all = user.saved_searches
-      puts "found #{ss_all}" if ss_all
-      saved_searches += ss_all if ss_all
+      user_ids << scrape(user)
+      return user_ids.uniq
+    end
+  end
+
+  def self.scrape_user(user)
+    return false unless user
+    user = User.find_by_id(user_id) if user.class.to_s == 'String'
+
+    added = false
+
+    user.saved_searches.each do |saved_search|
+      added = true if scrape_saved_search(saved_search)
     end
 
-    saved_searches.uniq!
+    return user.id if added
+    return false
+  end
 
-    saved_searches.each do |saved_search|
+  def self.scrape_saved_search(saved_search)
+    saved_search.add_key_value('updated_last', DateTime.now.utc.to_f.to_s, 'override')
 
-      puts "checking saved search #{saved_search}"
+    job_search = JobSearch.find_by_id(saved_search.job_search)
+    search_url = job_search.search_url
 
-      job_search = JobSearch.find_by_id(saved_search.job_search)
-      search_url = job_search.search_url
-
-      saved_search.keys.each do |key|
-        search_url = search_url.gsub("{{#{key}}}",saved_search.send(key).to_s)
-      end
-
-      puts "new url #{search_url}"
-
-      response = fetch(search_url,3)
-
-      search_results = job_search.build_search_results(saved_search,response.body)
-
-      search_results.each do |search_result|
-        sr = SearchResult.new(saved_search.saved_search_id)
-        puts "adding search result #{search_result}"
-        sr.add(search_result)
-        # saved_search.add_result(search_result)
-      end
-
+    saved_search.keys.each do |key|
+      search_url = search_url.gsub("{{#{key}}}",saved_search.send(key).to_s)
     end
+
+    response = fetch(search_url,3)
+
+    search_results = job_search.build_search_results(saved_search,response.body)
+
+    added = false
+
+    search_results.each do |search_result|
+      sr = SearchResult.new(saved_search.saved_search_id)
+      added = true if sr.add(search_result)
+    end
+    return added
   end
 
   def self.fetch(uri_str, limit = 10)

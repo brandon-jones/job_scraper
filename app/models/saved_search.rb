@@ -14,7 +14,7 @@ class SavedSearch < RedisModel
   end
 
   def self.unique_keys
-    return @unique_keys ||= [ "saved_search_id", "score", "parent_unique_id", "viewed" ]
+    return @unique_keys ||= [ "saved_search_id", "score", "parent_unique_id", "viewed", "updated_last" ]
   end
 
   def self.score
@@ -64,6 +64,10 @@ class SavedSearch < RedisModel
   def destroy
     $redis.del("#{SearchResult.key}:#{self.saved_search_id}")
     super
+  end
+
+  def refresh
+    return Scraper.scrape_saved_search(self)
   end
 
 end

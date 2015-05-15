@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get 'new'
     delete 'destroy'
     post 'viewed'
+    post 'refresh'
   end
 
   post 'we_work_remotelies', to: 'saved_searches#create'
