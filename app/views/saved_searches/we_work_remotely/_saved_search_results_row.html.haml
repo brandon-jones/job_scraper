@@ -1,8 +1,8 @@
 - options = {}
 - if result.applied.present?
-  - options = { class: 'applied', title: "#{local_time(result.to_time('applied'))}" }
+  - options = { class: 'applied time-tooltip', title: "Applied #{local_time_ago(result.to_time('applied'))}" }
 - if result.deleted.present?
-  - options = { class: 'deleted', title: "#{local_time(result.to_time('deleted'))}" }
+  - options = { class: 'deleted time-tooltip', title: "Deleted #{local_time_ago(result.to_time('deleted'))}" }
 - unless result.viewed.present?
   - options['class'] = '' unless options['class']
   - options['class'] = options['class'] + ' never-viewed'
