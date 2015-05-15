@@ -14,7 +14,7 @@
       - selected = params["controller"] + "_" + params["action"]
       %ul.nav.navbar-nav
         - if current_user
-          %li{:role => "presentation", class: "#{'active' if selected == 'users_saved_searches' || selected == 'saved_searches_new' }"}
+          %li{:role => "presentation", class: "#{'active' if selected == 'users_saved_searches' }"}
             %a{:href => "#{saved_searches_user_path(current_user)}"}
               Saved Searches
           %li{:role => "presentation", class: "#{'active' if selected == 'users_saved_search_results' }"}

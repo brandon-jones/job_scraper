@@ -1,6 +1,30 @@
 $(document).ready(function() {
+
+  fixLocalTime();
+
   return $('.apply-for-job').on("click", applyForJob);
 });
+
+fixLocalTime = function(e) {
+  console.log('testing');
+  timeObjs = $('.time-tooltip');
+  $.each(timeObjs, function( index, value ) {
+    time = value.title.replace('Last updated: ','');
+    dateTime = time.replace(/.+?"/,'').replace(/".+/,'');
+    conversion = time.replace(/.+data-local="/,'').replace(/">.+/,'');
+    switch(conversion) {
+      case "time-ago":
+        rightTime = LocalTime.relativeTimeAgo(new Date(dateTime));
+      break;
+      default:
+        rightTime = LocalTime.strftime(new Date(dateTime), "%B %e, %Y %l:%M%P");
+      break;
+    }
+    value.title = value.title.replace(/<.+/,rightTime)
+  });
+  
+
+};
 
 applyForJob = function(e) {
   e.stopPropagation();

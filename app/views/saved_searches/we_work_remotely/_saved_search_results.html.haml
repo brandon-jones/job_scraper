@@ -12,7 +12,7 @@
     %th
       = link_to 'Delete', "/saved_searches/destroy?score=#{saved_search.score}", method: :delete, data: { confirm: 'Are you sure? This will remove the search results as well but NOT your applied jobs' }
     %th
-      %span.glyphicon.glyphicon-refresh.clickable.saved-search-refresh{"aria-hidden" => "true", title: "Last updated: #{saved_search.updated_last || 'never'}", data: { parent_unique_id: saved_search.parent_unique_id, score: saved_search.score }}
+      %span.glyphicon.glyphicon-refresh.clickable.saved-search-refresh.time-tooltip{"aria-hidden" => "true", title: "Last updated: #{local_time_ago(saved_search.to_time('updated_last'))}", data: { parent_unique_id: saved_search.parent_unique_id, score: saved_search.score }}
 
 %p
   %strong
