@@ -62,9 +62,10 @@ class Scraper
   end
 
   def self.scrape_saved_search(saved_search)
+
     saved_search.add_key_value('updated_last', DateTime.now.utc.to_f.to_s, 'override')
 
-    job_search = JobSearch.find_by_id(saved_search.job_search)
+    job_search = saved_search.job_search
     search_url = job_search.search_url
 
     saved_search.keys.each do |key|

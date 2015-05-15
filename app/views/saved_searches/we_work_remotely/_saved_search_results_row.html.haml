@@ -1,0 +1,20 @@
+- options = {}
+- if result.applied.present?
+  - options = { class: 'applied', title: "#{local_time(result.to_time('applied'))}" }
+- if result.deleted.present?
+  - options = { class: 'deleted', title: "#{local_time(result.to_time('deleted'))}" }
+- unless result.viewed.present?
+  - options['class'] = '' unless options['class']
+  - options['class'] = options['class'] + ' never-viewed'
+%tr{ options, data: { href: "#{result.link}", score: "#{result.score}", parent_unqiue_id: "#{result.parent_unique_id}" } }
+  %td= result.company
+  %td
+    - if result.link && result.link.length > 0
+      = link_to result.title, result.link, { target: '_blank', title: "#{result.link}" }
+    - else
+      = result.title
+  %td= result.date
+  %td
+    - unless result.applied
+      %button.btn.btn-default.btn-xs.apply-for-job{ data: { result: result, saved_search_id: saved_search.saved_search_id } }
+        Applied

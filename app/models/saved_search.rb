@@ -61,8 +61,8 @@ class SavedSearch < RedisModel
     end
   end
 
-  def destroy
-    $redis.del("#{SearchResult.key}:#{self.saved_search_id}")
+  def destroy(permanent = false)
+    $redis.del("#{SearchResult.key}:#{self.saved_search_id}") if permanent
     super
   end
 

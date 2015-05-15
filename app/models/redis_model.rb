@@ -67,7 +67,9 @@ class RedisModel < Hashie::Mash
     return false unless member
     all = self.all unique_id
     all.each do |checking|
+
       checker = checking.to_s == 'Hash' ? checking : checking.to_hash
+
       if checker['score'] && member['score'] && (checker['score'] == member['score'])
         return checking
       elsif checker.except(*unique_keys) == member.except(*unique_keys).to_hash
@@ -79,6 +81,7 @@ class RedisModel < Hashie::Mash
 
   # override, ignore, build
   def add_key_value(key, value, status = 'ignore')
+
     case status
     when 'ignore'
       self[key] = value unless self[key]
@@ -104,8 +107,8 @@ class RedisModel < Hashie::Mash
     return self.score
   end
 
-  def destroy
-    return $redis.zremrangebyscore("#{redis_key}",score.to_f,score.to_f)
+  def destroy(permanent = false)
+    return $redis.zremrangebyscore("#{redis_key}",self.score.to_f,self.score.to_f)
   end
 
   def self.remove_by_score(score)
