@@ -1,0 +1,12 @@
+%tr.create-saved-search{id: "#{saved_search_result.html_score}-row"}
+  %td
+    - if saved_search_result.user_link && saved_search_result.user_link.length > 0
+      = link_to saved_search_result.company, saved_search_result.user_link, { target: '_blank', title: "#{saved_search_result.user_link}" }
+    - else
+      = saved_search_result.company
+  %td
+    = link_to saved_search_result.title, saved_search_result.link, { target: '_blank' }
+  %td
+    = local_time(saved_search_result.to_time('date_applied'))
+  %td
+    = render partial: 'saved_search_results/saved_search_result_options', locals: { saved_search_result: saved_search_result }
