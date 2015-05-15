@@ -14,6 +14,8 @@
     - else
       = result.title
   %td= result.date
+  %td= result.schedule
+  %td= result.location
   %td
     - unless result.applied
       %button.btn.btn-default.btn-xs.apply-for-job{ data: { result: result, saved_search_id: saved_search.saved_search_id } }

@@ -8,4 +8,8 @@ class JobSearchesController < ApplicationController
     @job_search = params
   end
 
+  def jr_dev_jobs
+    @job_search = params
+  end
+
 end

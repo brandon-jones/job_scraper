@@ -3,8 +3,5 @@
     = f.label :search_terms
     = f.text_field :search_terms, class: 'form-control'
     = f.hidden_field :job_search_id, value: "#{job_search.id}"
-  .field.form-group
-    = f.label :category
-    = f.select :category, job_search.category_options, {}, class: 'form-control'
   .actions
     = f.submit 'Save'

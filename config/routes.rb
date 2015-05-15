@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   end
 
   post 'we_work_remotelies', to: 'saved_searches#create'
+  post 'jr_dev_jobs_index', to: 'saved_searches#create'
 
   root to: "static_pages#home"
 end

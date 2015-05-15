@@ -58,6 +58,13 @@ class SavedSearch < RedisModel
         data[key]['search_terms'] = data[key]['search_terms'].downcase
       end
       return data.except('we_work_remotely').to_hash
+    elsif data["jr_dev_jobs"]
+      key = self.key
+      data[key] = data['jr_dev_jobs']
+      if data[key].keys.include?('search_terms')
+        data[key]['search_terms'] = data[key]['search_terms'].downcase
+      end
+      return data.except('jr_dev_jobs').to_hash
     end
   end
 

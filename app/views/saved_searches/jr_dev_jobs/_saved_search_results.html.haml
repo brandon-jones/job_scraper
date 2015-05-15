@@ -26,7 +26,11 @@
     %th
       Date Posted
     %th
+      Schedule
+    %th
+      Location
+    %th
       Apply
   - saved_search.results.sort_by { |k| k.date }.reverse.each do |result|
-    = render partial: 'saved_searches/we_work_remotely/saved_search_results_row', locals: { saved_search: saved_search, result: result }
+    = render partial: 'saved_searches/jr_dev_jobs/saved_search_results_row', locals: { saved_search: saved_search, result: result }
     
