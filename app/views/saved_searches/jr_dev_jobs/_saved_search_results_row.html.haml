@@ -18,5 +18,4 @@
   %td= result.location
   %td
     - unless result.applied
-      %button.btn.btn-default.btn-xs.apply-for-job{ data: { result: result, saved_search_id: saved_search.saved_search_id } }
-        Applied
+      = render partial: 'saved_searches/saved_searches_options', locals: { result: result, saved_search_id: saved_search.saved_search_id }

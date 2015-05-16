@@ -54,4 +54,8 @@ class SavedSearchesController < ApplicationController
     end
   end
 
+  def index
+    @saved_searches = current_user ? current_user.saved_searches : []
+  end
+
 end
