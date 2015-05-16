@@ -42,7 +42,7 @@ class Scraper
     user_ids = []
     saved_searches = []
     users.each do |user|
-      user_ids << scrape(user)
+      user_ids << scrape_user(user)
       return user_ids.uniq
     end
   end
