@@ -9,4 +9,4 @@
         %td{colspan: 3}
           - partial_name = j.type.split(/(?=[A-Z])/).join('_').downcase
           - partial_var = j.type.constantize.new
-          = render partial: "#{partial_name}", locals: { job_search: j, new_job_search: partial_var, options: j.options }
+          = render partial: "layouts/#{partial_name}/form", locals: { job_search: j, new_job_search: partial_var, options: j.options }
