@@ -1,32 +1,31 @@
-%table.table
-  %tr
-    %td= saved_search.job_search.name
-    - saved_search.user_data.keys.each do |key|
-      %td
-        - if ['Search Site','Delete'].include?(key)
-          = "#{saved_search.user_data[key]}:" 
-        - else
-          %strong
-            = key.titleize
-          = "#{saved_search.user_data[key]}"
-    %th
-      = link_to 'Delete', "/saved_searches/destroy?score=#{saved_search.score}", method: :delete, data: { confirm: 'Are you sure? This will remove the search results as well but NOT your applied jobs' }
-    %th
-      %span.glyphicon.glyphicon-refresh.clickable.saved-search-refresh.time-tooltip{"aria-hidden" => "true", title: "Last updated: #{saved_search.updated_last ? local_time_ago(saved_search.to_time('updated_last')) : 'never'}", data: { parent_unique_id: saved_search.parent_unique_id, score: saved_search.score }}
+.job-results
+  %table.table
+    %tr.results-title
+      %td.ssr-title
+        %strong= saved_search.job_search.name
+      - saved_search.user_data.keys.each do |key|
+        %td.ssr-cats
+          - if ['Search Site','Delete'].include?(key)
+            = "#{saved_search.user_data[key]}:" 
+          - else
+            %strong
+              = key.titleize
+            = "#{saved_search.user_data[key]}"
+      %td.ssr-delete
+        = link_to 'Delete', "/saved_searches/destroy?score=#{saved_search.score}", method: :delete, data: { confirm: 'Are you sure? This will remove the search results as well but NOT your applied jobs' }
+      %td.ssr-refresh
+        %span.glyphicon.glyphicon-refresh.clickable.saved-search-refresh.time-tooltip{"aria-hidden" => "true", title: "Last updated: #{saved_search.updated_last ? local_time_ago(saved_search.to_time('updated_last')) : 'never'}", data: { parent_unique_id: saved_search.parent_unique_id, score: saved_search.score }}
 
-%p
-  %strong
-    Results from saved Search
-%table.table{ data: { saved_search_id: saved_search.saved_search_id } }
-  %tr
-    %th
-      Company
-    %th
-      Job Title
-    %th
-      Date Posted
-    %th
-      Apply
-  - saved_search.results.sort_by { |k| k.date }.reverse.each do |result|
-    = render partial: 'saved_searches/we_work_remotely/saved_search_results_row', locals: { saved_search: saved_search, result: result }
-    
+  %table.table{ data: { saved_search_id: saved_search.saved_search_id } }
+    %tr
+      %th
+        Company
+      %th
+        Job Title
+      %th
+        Date Posted
+      %th
+        Apply
+    - saved_search.results.sort_by { |k| k.date }.reverse.each do |result|
+      = render partial: 'saved_searches/we_work_remotely/saved_search_results_row', locals: { saved_search: saved_search, result: result }
+      

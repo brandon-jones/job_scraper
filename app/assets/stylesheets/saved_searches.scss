@@ -13,3 +13,45 @@
         -webkit-transform: rotate( 360deg ); 
     }
 }
+
+.job-results {
+  background-color: #dbdbdb;
+  border-radius: 25px;
+  padding: .5em .5em .5em .5em;
+  margin-bottom: 2em;
+  & table tbody tr {
+    &.results-title {
+      border-bottom: 3px black solid;
+    }
+    & td {
+      border-top: none;
+      &.ssr-title {
+        width: 20%;
+      }
+      &.ssr-refresh {
+        width: 5%;
+      }
+      &.ssr-delete {
+        width: 10%;
+      }
+    }
+  }
+}
+
+.ss-title,.ss-desc {
+  width: 20%;
+  border-top: none !important;
+}
+
+.ss-link {
+  text-align: center;
+  border-top: none !important;
+}
+
+.ss-form {
+  background-color: #d6d6d6;
+}
+
+.show-saved-search-form:hover {
+  background-color: #d6d6d6;
+}
