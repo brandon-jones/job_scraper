@@ -16,21 +16,21 @@
         = link_to 'Delete', "/saved_searches/destroy?score=#{saved_search.score}", method: :delete, data: { confirm: 'Are you sure? This will remove the search results as well but NOT your applied jobs' }
       %td.ssr-refresh
         %span.glyphicon.glyphicon-refresh.clickable.saved-search-refresh.time-tooltip{"aria-hidden" => "true", title: "Last updated: #{saved_search.updated_last ? local_time_ago(saved_search.to_time('updated_last')) : 'never'}", data: { parent_unique_id: saved_search.parent_unique_id, score: saved_search.score }}
-
-  %table.table{ data: { saved_search_id: saved_search.saved_search_id } }
-    %tr
-      %th
-        Company
-      %th
-        Job Title
-      %th
-        Date Posted
-      %th
-        Schedule
-      %th
-        Location
-      %th
-        Apply
-    - saved_search.results.sort_by { |k| k.date }.reverse.each do |result|
-      = render partial: 'saved_searches/jr_dev_jobs/saved_search_results_row', locals: { saved_search: saved_search, result: result }
-      
+  - if saved_search.results.count > 0
+    %table.table.table-striped{ data: { saved_search_id: saved_search.saved_search_id } }
+      %tr
+        %th
+          Company
+        %th
+          Job Title
+        %th
+          Date Posted
+        %th
+          Schedule
+        %th
+          Location
+        %th
+          Apply
+      - saved_search.results.sort_by { |k| k.date }.reverse.each do |result|
+        = render partial: 'saved_searches/jr_dev_jobs/saved_search_results_row', locals: { saved_search: saved_search, result: result }
+        

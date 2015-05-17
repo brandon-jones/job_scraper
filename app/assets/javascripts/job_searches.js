@@ -6,7 +6,6 @@ $(document).ready(function() {
 });
 
 fixLocalTime = function(e) {
-  console.log('testing');
   timeObjs = $('.time-tooltip');
   $.each(timeObjs, function( index, value ) {
     time = value.title.replace('Last updated: ','');

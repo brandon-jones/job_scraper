@@ -10,10 +10,14 @@ $(document).ready(function() {
 
 showSavedSearchCreation = function(e) {
   var trRow = $("#saved-search-"+this.dataset.id+"-form");
+  var thisRow = this;
+  console.log("boogers")
   if (trRow[0].style.display == "none") {
-    trRow.show(200, 'linear')
+    trRow.show(200, 'linear');
+    thisRow.style.backgroundColor = '#D6D6D6';
   } else {
     trRow.hide(200, 'linear');
+    thisRow.style.backgroundColor = 'white';
   }
 };
 
