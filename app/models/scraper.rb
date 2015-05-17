@@ -72,7 +72,9 @@ class Scraper
       search_url = search_url.gsub("{{#{key}}}",saved_search.send(key).to_s)
     end
 
-    response = fetch(search_url,3)
+    binding.pry
+
+    response = fetch(URI.escape(search_url),3)
 
     search_results = job_search.build_search_results(saved_search,response.body)
 
