@@ -1,6 +1,22 @@
 $(document).ready(function() {
+  $('.ssr-exapnd-link').on("click", expandSavedSearchResults);
   return $('.saved-search-refresh').on("click", refreshSavedSearch);
 });
+
+expandSavedSearchResults = function(e) {
+  var link = this;
+  var table = $('#'+this.dataset.score.replace('.','\\.')+"-table");
+
+  if (table[0].style.display == "none") {
+    table.show(200, 'linear');
+    link.classList.remove("glyphicon-plus-sign")
+    link.classList.add("glyphicon-minus-sign")
+  } else {
+    table.hide(200, 'linear');
+    link.classList.remove("glyphicon-minus-sign")
+    link.classList.add("glyphicon-plus-sign")
+  }
+};
 
 refreshSavedSearch = function(e) {
   e.stopPropagation();
@@ -27,3 +43,5 @@ refreshSavedSearch = function(e) {
 
   return refreshLink.classList.remove('glyphicon-refresh-animate');
 };
+
+

@@ -1,6 +1,8 @@
 .job-results
   %table.table
     %tr.results-title
+      %td.ssr-expand
+        %span.glyphicon.glyphicon-plus-sign.clickable.ssr-exapnd-link{ data: { score: saved_search.score }}
       %td.ssr-title
         %strong
           = saved_search.job_search.name
@@ -17,7 +19,7 @@
       %td.ssr-refresh
         %span.glyphicon.glyphicon-refresh.clickable.saved-search-refresh.time-tooltip{"aria-hidden" => "true", title: "Last updated: #{saved_search.updated_last ? local_time_ago(saved_search.to_time('updated_last')) : 'never'}", data: { parent_unique_id: saved_search.parent_unique_id, score: saved_search.score }}
   - if saved_search.results.count > 0
-    %table.table.table-striped{ data: { saved_search_id: saved_search.saved_search_id } }
+    %table.table.table-striped{ id: "#{saved_search.score}-table", style: 'display:none;', data: { saved_search_id: saved_search.saved_search_id } }
       %tr
         %th
           Company
