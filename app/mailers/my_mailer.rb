@@ -57,6 +57,24 @@ class MyMailer < Devise::Mailer
     mandrill_send options
   end
   
+  def mandrill_send(opts={})
+    return if Rails.env == 'test'
+    message = { 
+      :subject=> "#{opts[:subject]}", 
+      :from_name=> "job hunt",
+      :from_email=>"job-hunt@job-hunt.com",
+      :to=>
+            [{"name"=>"Some User",
+                "email"=>"#{opts[:email]}",
+                "type"=>"to"}],
+      :global_merge_vars => opts[:global_merge_vars]
+    }
+    sending = MANDRILL.messages.send_template opts[:template], [], message
+    rescue Mandrill::Error => e
+      Rails.logger.debug("#{e.class}: #{e.message}")
+      raise
+  end
+
   def self.mandrill_send(opts={})
     return if Rails.env == 'test'
     message = { 
