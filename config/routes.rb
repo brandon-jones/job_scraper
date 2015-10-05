@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     delete 'destroy'
     post 'viewed'
     post 'refresh'
+    get 'redis_info'
+    post 'del_redis_key'
   end
 
   post 'we_work_remotelies', to: 'saved_searches#create'

@@ -1,0 +1,16 @@
+%h1.text-center
+  All Redis Keys and Values
+- @redis_info.keys.each do |key|
+  .redis-info{ class: key }
+    %h3
+      = key
+      \-
+      = @redis_info[key].split('-:-').first
+    = link_to 'del', '#', class: 'del-redis-key', data: {key: key}
+    %br
+    - JSON.parse(@redis_info[key].split('-:-').last).each do |value|
+      - JSON.parse(value).each do |parsed_value|
+        = parsed_value.join(' : ')
+        %br
+      %br
+    %hr

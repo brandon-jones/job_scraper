@@ -14,6 +14,22 @@ class SavedSearchesController < ApplicationController
     @job_searches = JobSearch.all
   end
 
+  def redis_info
+    @redis_info = SavedSearch.raw_redis_info
+  end
+
+  def del_redis_key
+    respond_to do |format|
+      if !params.include?('key')
+        format.json { render :json=>false }
+      elsif $redis.del(params['key'])
+        format.json { render :json=>true }
+      else
+        format.json { render :json => 'errors', :status => :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     redirect_to root_url and return unless current_user
     respond_to do |format|

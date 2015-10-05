@@ -13,6 +13,20 @@ class SavedSearch < RedisModel
     super(hash)
   end
 
+  def self.raw_redis_info
+    key_values = {}
+    keys = $redis.keys('*')
+    keys.each do |key|
+      case $redis.type key
+        when 'zset'
+          key_values[key] = $redis.type(key) + "-:-" + $redis.zrange(key,0,-1).to_s
+        when 'string'
+          key_values[key] = $redis.type(key) + "-:-" + $redis.get(key).to_s
+      end
+    end
+    return key_values
+  end
+
   def self.unique_keys
     return @unique_keys ||= [ "saved_search_id", "score", "parent_unique_id", "viewed", "updated_last" ]
   end

@@ -37,7 +37,6 @@ class User < ActiveRecord::Base
       ],
       :template => "updated-jobs"
       }
-
       MyMailer.mandrill_send options
     end
   end

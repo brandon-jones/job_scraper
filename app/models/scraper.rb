@@ -43,8 +43,8 @@ class Scraper
     saved_searches = []
     users.each do |user|
       user_ids << scrape_user(user)
-      return user_ids.uniq
     end
+    return user_ids.uniq
   end
 
   def self.scrape_user(user)

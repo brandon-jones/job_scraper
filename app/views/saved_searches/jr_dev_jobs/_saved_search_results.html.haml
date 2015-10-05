@@ -14,6 +14,10 @@
             %strong
               = key.titleize
             = "#{saved_search.user_data[key]}"
+        %td.ssr-count
+          %strong
+            Count:
+          = saved_search.results.count
       %td.ssr-delete
         = link_to 'Delete', "/saved_searches/destroy?score=#{saved_search.score}", method: :delete, data: { confirm: 'Are you sure? This will remove the search results as well but NOT your applied jobs' }
       %td.ssr-refresh
