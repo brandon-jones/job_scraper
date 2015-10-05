@@ -36,11 +36,11 @@ class SavedSearchesController < ApplicationController
       if saved_search = SavedSearch.find_by_score(current_user.id, params["score"])
         if saved_search.destroy(true)
           format.json { render :json=>true }
-          format.html { redirect_to saved_search_results_user_path(current_user) }
+          format.html { redirect_to saved_searches_user_path(current_user) }
         end
       end
       format.json { render :json => 'errors', :status => :unprocessable_entity }
-      format.html { redirect_to saved_search_results_user_path(current_user) }
+      format.html { redirect_to saved_searches_user_path(current_user) }
     end
   end
 
