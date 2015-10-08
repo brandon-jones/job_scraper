@@ -1,4 +1,6 @@
 class UsersController < Devise::SessionsController
+  before_action :authenticated
+  
   def new
   end
 

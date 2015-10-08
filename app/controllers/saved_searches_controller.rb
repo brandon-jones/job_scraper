@@ -1,4 +1,6 @@
 class SavedSearchesController < ApplicationController
+  before_action :authenticated
+  before_action :authenticated_admin, except: [:redis_info]
 
   def create
     redirect_to root_url and return unless current_user
