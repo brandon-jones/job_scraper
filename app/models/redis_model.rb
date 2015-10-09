@@ -118,11 +118,11 @@ class RedisModel < Hashie::Mash
   def self.all(unique_id)
     @unique_id = unique_id
     builder = []
-      members = $redis.zrange("#{self.new(unique_id).redis_key}", 0, -1)
-      members.each do |member|
-        ss = self.new(@unique_id, JSON.parse(member))
-        builder << ss
-      end
+    members = $redis.zrange("#{self.new(unique_id).redis_key}", 0, -1)
+    members.each do |member|
+      ss = self.new(@unique_id, JSON.parse(member))
+      builder << ss
+    end
     return builder
   end
 

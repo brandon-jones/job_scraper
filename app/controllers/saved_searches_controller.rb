@@ -1,6 +1,6 @@
 class SavedSearchesController < ApplicationController
   before_action :authenticated
-  before_action :authenticated_admin, except: [:redis_info]
+  before_action :authenticated_admin?, except: [:redis_info]
 
   def create
     redirect_to root_url and return unless current_user
@@ -63,9 +63,15 @@ class SavedSearchesController < ApplicationController
       if params["score"] && params["parent_unique_id"]
         ss = SavedSearch.find_by_score(params["parent_unique_id"],params["score"])
         if ss.refresh
+          saved_searches = current_user ? current_user.saved_searches : []
+          saved_search = saved_searches.select{ |x| x.saved_search_id == params["search_results_id"] }.first
           format.json { render :json=>true }
+          format.html { render partial: "saved_searches/#{params["type"].underscore}/saved_search_results.html", locals: { saved_search: saved_search, expanded: true }, :status => 200 }
         else
+          saved_searches = current_user ? current_user.saved_searches : []
+          saved_search = saved_searches.select{ |x| x.saved_search_id == params["search_results_id"] }.first
           format.json { render :json=>'No new jobs' }
+          format.html { render partial: "saved_searches/#{params["type"].underscore}/saved_search_results.html", locals: { saved_search: saved_search, expanded: true }, :status => 200 }
         end
       end
       format.json { render :json => 'errors', :status => :unprocessable_entity }

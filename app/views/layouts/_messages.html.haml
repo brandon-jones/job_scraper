@@ -1,6 +1,14 @@
-- flash.each do |key, value|
-  %div{:class => "alert alert-#{key}"}
-    %a.close{"data-dismiss" => "alert", :href => "#"} ×
-    %ul.no-bullets
-      %li
-        = value
+:javascript
+  $(document).ready(function() {setTimeout(function(){
+      $('.flash-msg').fadeOut("slow");
+    }, 3000);
+
+  });
+.row.flash-msg
+  .col-md-12
+    - flash.each do |key, value|
+      %div{:class => "alert alert-#{key}"}
+        %a.close{"data-dismiss" => "alert", :href => "#"} ×
+        %ul.no-bullets
+          %li
+            = value

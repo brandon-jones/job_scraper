@@ -6,7 +6,8 @@
       = key
       \-
       = @redis_info[key].split('-:-').first
-    = link_to 'del', '#', class: 'del-redis-key', data: {key: key}
+      %small
+        = link_to 'del', '#', class: 'del-redis-key', data: {key: key}
     %br
     - JSON.parse(@redis_info[key].split('-:-').last).each do |value|
       - JSON.parse(value).each do |parsed_value|

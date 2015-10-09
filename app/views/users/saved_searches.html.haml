@@ -2,7 +2,8 @@
   %h1.text-center
     Saved Job Searches
   - @saved_searches.each do |saved_search|
-    = render partial: "saved_searches/#{saved_search.job_search.type.underscore}/saved_search_results.html", locals: { saved_search: saved_search }
+    .saved-search-results{class: "search-id-#{saved_search.saved_search_id}"}
+      = render partial: "saved_searches/#{saved_search.job_search.type.underscore}/saved_search_results.html", locals: { saved_search: saved_search, expanded: false }
 - else
   %p
     You have no saved searches

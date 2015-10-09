@@ -15,12 +15,8 @@
     .container-fluid
       .row.spacer
         .col-md-12
-      .row
-        .col-md-12
-          = render 'layouts/messages'
-      .row
-        .col-md-12
-          = render partial: 'layouts/top_nav'
+      = render 'layouts/messages'
+      = render partial: 'layouts/top_nav'
       .row
         .col-md-10.col-sm-offset-1
           = yield

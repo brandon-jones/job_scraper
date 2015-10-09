@@ -46,6 +46,7 @@ applyForJob = function(e) {
     success: function(data, textStatus) {
       button.style.visibility = "hidden";
       button.parentElement.parentElement.classList.add('applied');
+      button.parentElement.parentElement.classList.remove('never-viewed');
     }
   });
 };

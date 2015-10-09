@@ -35,39 +35,50 @@ delRedisKey = function(e) {
       },
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       success: function(data, textStatus) {
-        link.parentElement.hidden = true;
+        link.parentElement.parentElement.parentElement.hidden = true;
       }
     });
   }
 };
 
-
-
-
 refreshSavedSearch = function(e) {
   e.stopPropagation();
   e.preventDefault();
-  refreshLink = this;
-  refreshLink.classList.add('glyphicon-refresh-animate')
+  var $refreshLink = this;
+  animateClass = "glyphicon-refresh-animate";
+  $refreshLink.classList.add( animateClass );
 
-  parent_unique_id = refreshLink.dataset.parentUniqueId;
-  score = refreshLink.dataset.score;
+  parentUniqueId = $refreshLink.dataset.parentUniqueId;
+  score = $refreshLink.dataset.score;
+  type = $refreshLink.dataset.type;
+  searchResultsId = $refreshLink.dataset.searchResults;
 
   $.ajax({
     type: 'POST',
     url: '/saved_searches/refresh',
-    dataType: 'json',
+    dataType: 'html',
     data: {
-      parent_unique_id: parent_unique_id,
-      score: score
+      parent_unique_id: parentUniqueId,
+      score: score,
+      type: type,
+      search_results_id: searchResultsId
     },
     beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
     success: function(data, textStatus) {
+      $refreshLink.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.innerHTML = data;
+      $('.ssr-exapnd-link').unbind("click");
+      $('.ssr-exapnd-link').on("click", expandSavedSearchResults);
+      $('.saved-search-refresh').unbind("click");
+      $('.saved-search-refresh').on("click", refreshSavedSearch);
+      $('.apply-for-job').unbind("click");
+      $('.apply-for-job').on("click", applyForJob);
+      fixLocalTime();
+      registerAllViews();
       console.log('testing');
     }
   });
 
-  return refreshLink.classList.remove('glyphicon-refresh-animate');
+  return;
 };
 
 
